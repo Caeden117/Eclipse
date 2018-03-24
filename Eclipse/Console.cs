@@ -42,7 +42,7 @@ namespace Eclipse
 
         private void Console_Load(object sender, EventArgs e)
         {
-            pausedControls = new Button[] { hunt, scavange };
+            pausedControls = new Button[] { hunt, scavange, rest, };
             inventory.Items.Add("Stick");
             inventory.Items.Add("Wood Plank");
             inventory.Items.Add("Leather Strap");
@@ -74,13 +74,17 @@ namespace Eclipse
             endurance.Text = "Endurance: " + Properties.Settings.Default.Endurance;
             agility.Text = "Agility: " + Properties.Settings.Default.Agility;
             health.Text = "HP: " + Properties.Settings.Default.HP + "/" + Properties.Settings.Default.HPMax;
-            healthoverflow.Value = Convert.ToInt32(((Properties.Settings.Default.HPOverflow) / Properties.Settings.Default.HPMax / 4)) * 100;
+            healthoverflow.Value = Convert.ToInt32(healthoverflow.Maximum * (Properties.Settings.Default.HPOverflow / (decimal)Properties.Settings.Default.HPOverflowMax));
             Properties.Settings.Default.HPOverflowMax = Convert.ToInt32(Math.Round(Convert.ToDouble(Properties.Settings.Default.HPMax / 4)));
+
             if (Properties.Settings.Default.HP <= Properties.Settings.Default.HPMax)
-                healthbar.Value = (Properties.Settings.Default.HP / Properties.Settings.Default.HPMax) * 100;
+                healthbar.Value = Convert.ToInt32(healthbar.Maximum * (Properties.Settings.Default.HP / (decimal)Properties.Settings.Default.HPMax));
+
             healthsmall.Value = 100;
+
             xp.Text = "Level: " + Properties.Settings.Default.Level;
-            xpbar.Value = (Properties.Settings.Default.XP / Properties.Settings.Default.XPMax) * 100;
+            if (Properties.Settings.Default.XP <= Properties.Settings.Default.XPMax)
+                xpbar.Value = Convert.ToInt32(xpbar.Maximum * (Properties.Settings.Default.XP / (decimal)Properties.Settings.Default.XPMax));
             if (Properties.Settings.Default.XP >= Properties.Settings.Default.XPMax)
             {
                 Properties.Settings.Default.XP = 0;
@@ -165,8 +169,6 @@ namespace Eclipse
                 healthoverflow.Visible = false;
                 healthbar.Visible = true;
             }
-
-            craftButton.Enabled = craft.Items.Count > 0 ? true : false;
             craftItem.Enabled = craft.Items.Count > 0 ? true : false;
             foreach (var recipe in itemList.recipes.Where(g => g.craftLevel <= Properties.Settings.Default.craftLevel || g.craftLevel == 0))
             {
@@ -219,7 +221,7 @@ namespace Eclipse
             {
                 if (button == scavange)
                 {
-                    if (Properties.Settings.Default.Level >= 5)
+                    if (Properties.Settings.Default.Level >= 5 && isPaused == false)
                     {
                         scavange.Enabled = true;
                     }
@@ -714,14 +716,14 @@ namespace Eclipse
             mainConsole.AppendText(System.Environment.NewLine + "You have finished scavaging.");
             scavangeLoop.Enabled = false;
             isPaused = false;
-            for(var i = 0; i < Math.Round(Convert.ToDouble(scavangeLoop.Interval / 100) - 8); i++)
+            for(var i = 0; i < rng.Next(1, 3); i++)
             {
-                int tableLevel = Convert.ToInt32(Math.Floor(Convert.ToDecimal(Properties.Settings.Default.Level / 5))) - 1;
+                int tableLevel = Properties.Settings.Default.Level - 5;
                 if (tableLevel >= 0)
                 {
-                    for (var a = 0; a < rng.Next(1, 3); a++)
+                    for (var b = 0; b < tableLevel + 1; b++)
                     {
-                        Item loot = itemList.find(lootTables.lootingTables[i, a]);
+                        Item loot = itemList.find(lootTables.lootingTables[b, rng.Next(0, 4)]);
                         if (weight2 >= Properties.Settings.Default.carryingCap)
                         {
                             mainConsole.AppendText(System.Environment.NewLine + "You would've recieved " + loot.name + ", but you can't carry any more!");
@@ -734,6 +736,27 @@ namespace Eclipse
                     }
                 }
             }
+        }
+
+        private void rest_Click(object sender, EventArgs e)
+        {
+            restLoop.Interval = rng.Next(9000, 15000) + ((Properties.Settings.Default.HPMax - Properties.Settings.Default.HP) * 100);
+            restLoop.Enabled = true;
+            isPaused = true;
+            mainConsole.AppendText(System.Environment.NewLine + "You are now resting. Depending on how injured you are, you will sleep for longer!");
+        }
+
+        private void restLoop_Tick(object sender, EventArgs e)
+        {
+            int hpGain = rng.Next(5, 15) + getModifier(Properties.Settings.Default.Constitution) + Convert.ToInt32(Math.Round(Convert.ToDecimal(restLoop.Interval / 1000)));
+            Properties.Settings.Default.HP += hpGain;
+            mainConsole.AppendText(System.Environment.NewLine + "Rise and shine! After resting, you have regained " + hpGain + " health.");
+            if (Properties.Settings.Default.HP > Properties.Settings.Default.HPMax)
+            {
+                Properties.Settings.Default.HP = Properties.Settings.Default.HPMax;
+            }
+            restLoop.Enabled = false;
+            isPaused = false;
         }
     }
 }

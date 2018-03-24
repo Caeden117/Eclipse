@@ -71,6 +71,8 @@
             this.craftItem = new System.Windows.Forms.Button();
             this.scavange = new System.Windows.Forms.Button();
             this.scavangeLoop = new System.Windows.Forms.Timer(this.components);
+            this.rest = new System.Windows.Forms.Button();
+            this.restLoop = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // name
@@ -462,11 +464,27 @@
             this.scavangeLoop.Interval = 10000;
             this.scavangeLoop.Tick += new System.EventHandler(this.scavangeLoop_Tick);
             // 
+            // rest
+            // 
+            this.rest.Location = new System.Drawing.Point(440, 409);
+            this.rest.Name = "rest";
+            this.rest.Size = new System.Drawing.Size(88, 25);
+            this.rest.TabIndex = 38;
+            this.rest.Text = "🛌 Rest";
+            this.rest.UseVisualStyleBackColor = true;
+            this.rest.Click += new System.EventHandler(this.rest_Click);
+            // 
+            // restLoop
+            // 
+            this.restLoop.Interval = 10000;
+            this.restLoop.Tick += new System.EventHandler(this.restLoop_Tick);
+            // 
             // Console
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 560);
+            this.Controls.Add(this.rest);
             this.Controls.Add(this.scavange);
             this.Controls.Add(this.craftItem);
             this.Controls.Add(this.itemRequires);
@@ -557,5 +575,7 @@
         private System.Windows.Forms.Button craftItem;
         private System.Windows.Forms.Button scavange;
         private System.Windows.Forms.Timer scavangeLoop;
+        private System.Windows.Forms.Button rest;
+        private System.Windows.Forms.Timer restLoop;
     }
 }
