@@ -40,6 +40,13 @@ namespace Eclipse
                 "Rugged Wooden Sword",
                 "Potion",
                 "Raw Meat"
+            },
+            {
+                "Silver Coin",
+                "Potion",
+                "Scrap Metal",
+                "Scrap Metal",
+                "Wood Plank"
             }
         };
     }
