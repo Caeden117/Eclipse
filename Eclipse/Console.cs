@@ -14,6 +14,7 @@ using System.Windows.Forms;
     S: Start
     I: Infected
     O: Health Overflow
+    M: Health Overflow Max reached
     H: Hunger reaches 0
     W: Over carrying capacity (Overweight)
     C: Crafting first item
@@ -74,10 +75,19 @@ namespace Eclipse
             endurance.Text = "Endurance: " + Properties.Settings.Default.Endurance;
             agility.Text = "Agility: " + Properties.Settings.Default.Agility;
             health.Text = "HP: " + Properties.Settings.Default.HP + "/" + Properties.Settings.Default.HPMax;
+            if (Properties.Settings.Default.HPOverflow >= Properties.Settings.Default.HPOverflowMax)
+            {
+                Properties.Settings.Default.HPOverflow = Properties.Settings.Default.HPOverflowMax;
+                if (Properties.Settings.Default.tutorialList.IndexOf("M") == -1 && Properties.Settings.Default.tutorial)
+                {
+                    Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "M";
+                    MessageBox.Show("Woah there!" + newSection() + "You have healed yourself to the point where you've hit your overflow max! Any extra health would be discarded forever, so use your healing items wisely!", "Eclipse Tutorial - Overflow Maximum Reached", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
             healthoverflow.Value = Convert.ToInt32(healthoverflow.Maximum * (Properties.Settings.Default.HPOverflow / (decimal)Properties.Settings.Default.HPOverflowMax));
             Properties.Settings.Default.HPOverflowMax = Convert.ToInt32(Math.Round(Convert.ToDouble(Properties.Settings.Default.HPMax / 4)));
 
-            if (Properties.Settings.Default.HP <= Properties.Settings.Default.HPMax)
+            if (Properties.Settings.Default.HP <= Properties.Settings.Default.HPMax && Properties.Settings.Default.HP >= 0)
                 healthbar.Value = Convert.ToInt32(healthbar.Maximum * (Properties.Settings.Default.HP / (decimal)Properties.Settings.Default.HPMax));
 
             healthsmall.Value = 100;
@@ -394,6 +404,7 @@ namespace Eclipse
             {
                 throwItem.Enabled = true;
                 itemName.Text = itemList.find(inventory.SelectedItem.ToString()).name;
+                itemName.ForeColor = Color.FromName(itemList.rarityColors[itemList.find(inventory.SelectedItem.ToString()).rarityLevel]);
                 if (Properties.Settings.Default.Intelligence >= itemList.find(inventory.SelectedItem.ToString()).intLevel)
                 {
                     itemDescription.Text = itemList.find(inventory.SelectedItem.ToString()).description;
@@ -456,6 +467,7 @@ namespace Eclipse
                     Properties.Settings.Default.weapon = itemList.find(inventory.SelectedItem.ToString()).name;
                     use.Text = "Put Away";
                 }
+                weapon.ForeColor = Color.FromName(itemList.rarityColors[itemList.find(Properties.Settings.Default.weapon).rarityLevel]);
             }
         }
 
@@ -719,6 +731,8 @@ namespace Eclipse
             for(var i = 0; i < rng.Next(1, 3); i++)
             {
                 int tableLevel = Properties.Settings.Default.Level - 5;
+                if (tableLevel > lootTables.lootingTables.Length)
+                    tableLevel = lootTables.lootingTables.Length;
                 if (tableLevel >= 0)
                 {
                     for (var b = 0; b < tableLevel + 1; b++)
