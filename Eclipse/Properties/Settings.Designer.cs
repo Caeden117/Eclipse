@@ -229,31 +229,6 @@ namespace Eclipse.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>Stats are randomly chosen on game creation - Base your character off of these!</string>
-  <string>You can choose one stat to upgrade every level.</string>
-  <string>Once in a while, you'll stumble upon a survivor. With a high enough Charisma, maybe you could recruit them!</string>
-  <string>If you're feeling Lucky, you could find more valuable loot in drops!</string>
-  <string>Each stat you have can influence different aspects of Eclipse!</string>
-  <string>A high Constitution means you're less likely to be infected!</string>
-  <string>Not sure what your item does? Maybe you need a higher Intelligence!</string>
-  <string>Strength plays a role in your Armor, along with any you are currently wearing.</string>
-  <string>A higher Agility can improve your accuracy and improve your dodging!</string>
-  <string>Want more damage with ranged weapons and a higher accuracy of melee weapons? Improve Dexterity!</string>
-  <string>A high Endurance can lessen the effects of Infection and Hunger!</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection Tips {
-            get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["Tips"]));
-            }
-            set {
-                this["Tips"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int Agility {
             get {

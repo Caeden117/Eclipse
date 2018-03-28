@@ -13,6 +13,19 @@ namespace Eclipse
     public partial class CharacterCreation : Form
     {
         Random rng = new Random();
+        string[] tips = new string[] {
+            "Stats are randomly chosen on game creation - Base your character off of these!",
+            "You can choose one stat to upgrade every level.",
+            "Once in a while, you'll stumble upon a survivor. With a high enough Charisma, maybe you could recruit them!",
+            "If you're feeling Lucky, you could find more valuable loot in drops!",
+            "Each stat you have can influence different aspects of Eclipse!",
+            "A high Constitution means you're less likely to be infected!",
+            "Not sure what your item does? Maybe you need a higher Intelligence!",
+            "Strength plays a role in your Armor, along with any you are currently wearing.",
+            "A higher Agility can improve your accuracy and improve your dodging!",
+            "Want more damage with ranged weapons and a higher accuracy of melee weapons? Improve Dexterity!",
+            "A high Endurance can lessen the effects of Infection and Hunger!",
+        };
 
         public CharacterCreation()
         {
@@ -21,7 +34,7 @@ namespace Eclipse
 
         private void CharacterCreation_Load(object sender, EventArgs e)
         {
-            richTextBox1.Text += Properties.Settings.Default.Tips[rng.Next(0, Properties.Settings.Default.Tips.Count)];
+            richTextBox1.Text += tips[rng.Next(0, tips.Length)];
         }
 
         private void button1_Click(object sender, EventArgs e)

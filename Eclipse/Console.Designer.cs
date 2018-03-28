@@ -73,6 +73,10 @@
             this.scavangeLoop = new System.Windows.Forms.Timer(this.components);
             this.rest = new System.Windows.Forms.Button();
             this.restLoop = new System.Windows.Forms.Timer(this.components);
+            this.openFile = new System.Windows.Forms.OpenFileDialog();
+            this.saveFile = new System.Windows.Forms.SaveFileDialog();
+            this.saveButton = new System.Windows.Forms.Button();
+            this.loadButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // name
@@ -479,11 +483,45 @@
             this.restLoop.Interval = 10000;
             this.restLoop.Tick += new System.EventHandler(this.restLoop_Tick);
             // 
+            // openFile
+            // 
+            this.openFile.FileName = "Eclipse Save File";
+            this.openFile.Filter = "Eclipse Save Files|*.ecl";
+            this.openFile.Title = "Eclipse - Open From File";
+            // 
+            // saveFile
+            // 
+            this.saveFile.FileName = "Eclipse Save File";
+            this.saveFile.Filter = "Eclipse Save Files|*.ecl";
+            this.saveFile.Title = "Eclipse - Save Game";
+            // 
+            // saveButton
+            // 
+            this.saveButton.Location = new System.Drawing.Point(252, 524);
+            this.saveButton.Name = "saveButton";
+            this.saveButton.Size = new System.Drawing.Size(88, 25);
+            this.saveButton.TabIndex = 39;
+            this.saveButton.Text = "🖺 Save";
+            this.saveButton.UseVisualStyleBackColor = true;
+            this.saveButton.Click += new System.EventHandler(this.save_Click);
+            // 
+            // loadButton
+            // 
+            this.loadButton.Location = new System.Drawing.Point(346, 523);
+            this.loadButton.Name = "loadButton";
+            this.loadButton.Size = new System.Drawing.Size(88, 25);
+            this.loadButton.TabIndex = 40;
+            this.loadButton.Text = "📁 Load";
+            this.loadButton.UseVisualStyleBackColor = true;
+            this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
+            // 
             // Console
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 560);
+            this.Controls.Add(this.loadButton);
+            this.Controls.Add(this.saveButton);
             this.Controls.Add(this.rest);
             this.Controls.Add(this.scavange);
             this.Controls.Add(this.craftItem);
@@ -577,5 +615,9 @@
         private System.Windows.Forms.Timer scavangeLoop;
         private System.Windows.Forms.Button rest;
         private System.Windows.Forms.Timer restLoop;
+        private System.Windows.Forms.OpenFileDialog openFile;
+        private System.Windows.Forms.SaveFileDialog saveFile;
+        private System.Windows.Forms.Button saveButton;
+        private System.Windows.Forms.Button loadButton;
     }
 }

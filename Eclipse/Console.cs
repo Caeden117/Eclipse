@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,9 +55,7 @@ namespace Eclipse
             {
                 inventory.Items.Add(item);
             }
-
-            name.Text = Properties.Settings.Default.Name;
-            clan.Text = Properties.Settings.Default.Clan;
+            
             if (Properties.Settings.Default.tutorialList.IndexOf("S") == -1 && Properties.Settings.Default.tutorial)
             {
                 Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "S";
@@ -75,6 +74,8 @@ namespace Eclipse
             endurance.Text = "Endurance: " + Properties.Settings.Default.Endurance;
             agility.Text = "Agility: " + Properties.Settings.Default.Agility;
             health.Text = "HP: " + Properties.Settings.Default.HP + "/" + Properties.Settings.Default.HPMax;
+            name.Text = Properties.Settings.Default.Name;
+            clan.Text = Properties.Settings.Default.Clan;
             if (Properties.Settings.Default.HPOverflow >= Properties.Settings.Default.HPOverflowMax)
             {
                 Properties.Settings.Default.HPOverflow = Properties.Settings.Default.HPOverflowMax;
@@ -771,6 +772,69 @@ namespace Eclipse
             }
             restLoop.Enabled = false;
             isPaused = false;
+        }
+
+        private void save_Click(object sender, EventArgs e)
+        {
+            saveGame();
+        }
+
+        public void saveGame()
+        {
+            if (saveFile.ShowDialog() == DialogResult.OK)
+            {
+                using (StreamWriter save = new StreamWriter(saveFile.FileName))
+                {
+                    foreach (System.Configuration.SettingsProperty value in Properties.Settings.Default.Properties)
+                    {
+                        save.WriteLine(value.Name + "|" + Properties.Settings.Default[value.Name]);
+                    }
+                    foreach (string inventoryItem in inventory.Items.Cast<String>())
+                    {
+                        save.WriteLine(inventoryItem);
+                    }
+                }
+            }
+        }
+
+        public void loadGame()
+        {
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {
+                if (File.Exists(openFile.FileName))
+                {
+                    var lines = File.ReadAllLines(openFile.FileName);
+                    inventory.Items.Clear();
+                    /*for (var i = 0; i < lines.Length; i++)
+                    {
+                        try
+                        {
+                            Properties.Settings.Default[lines[i].Split('|').First()] = lines[i].Split('|').Last();
+                        }
+                        catch (Exception)
+                        {
+                            inventory.Items.Add(lines[i]);
+                        }
+                    }*/
+                    foreach(string line in lines)
+                    {
+                        try
+                        {
+                            Properties.Settings.Default[line.Split('|').First()] = line.Split('|').Last();
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex is System.Configuration.SettingsPropertyWrongTypeException || ex is System.Configuration.SettingsPropertyNotFoundException)
+                                inventory.Items.Add(line);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void loadButton_Click(object sender, EventArgs e)
+        {
+            loadGame();
         }
     }
 }
