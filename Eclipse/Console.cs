@@ -805,27 +805,30 @@ namespace Eclipse
                 {
                     var lines = File.ReadAllLines(openFile.FileName);
                     inventory.Items.Clear();
-                    /*for (var i = 0; i < lines.Length; i++)
+                    int tick = 0;
+                    foreach (System.Configuration.SettingsProperty value in Properties.Settings.Default.Properties)
                     {
-                        try
+                        tick++;
+                    }
+                    for (var i = 0; i < lines.Length; i++)
+                    {
+                        if (i < tick)
                         {
-                            Properties.Settings.Default[lines[i].Split('|').First()] = lines[i].Split('|').Last();
+                            int bob = 0;
+                            if (lines[i].Split('|').Last() == "False" || lines[i].Split('|').Last() == "True")
+                            {
+                                Properties.Settings.Default[lines[i].Split('|').First()] = bool.Parse(lines[i].Split('|').Last());
+                            }else if (int.TryParse(lines[i].Split('|').Last(), out bob)){
+                                Properties.Settings.Default[lines[i].Split('|').First()] = int.Parse(lines[i].Split('|').Last());
+                            }
+                            else
+                            {
+                                Properties.Settings.Default[lines[i].Split('|').First()] = lines[i].Split('|').Last();
+                            }
                         }
-                        catch (Exception)
+                        else
                         {
                             inventory.Items.Add(lines[i]);
-                        }
-                    }*/
-                    foreach(string line in lines)
-                    {
-                        try
-                        {
-                            Properties.Settings.Default[line.Split('|').First()] = line.Split('|').Last();
-                        }
-                        catch (Exception ex)
-                        {
-                            if (ex is System.Configuration.SettingsPropertyWrongTypeException || ex is System.Configuration.SettingsPropertyNotFoundException)
-                                inventory.Items.Add(line);
                         }
                     }
                 }
