@@ -62,9 +62,25 @@ namespace Eclipse
         private void button3_Click(object sender, EventArgs e)
         {
             Console console = new Console();
-            console.loadGame();
-            console.Show();
-            Hide();
+            if (console.loadGame())
+            {
+                console.Show();
+                Hide();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.Name != "" || Properties.Settings.Default.Clan != "")
+            {
+                Console console = new Console();
+                console.Show();
+                Hide();
+            }
+            else
+            {
+                MessageBox.Show("Eclipse has detected no active game running. Please start a new game, or load from a file.", "Eclipse - Loading Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

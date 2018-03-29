@@ -26,7 +26,7 @@ namespace Eclipse
         public Mob(int playerLevel)
         {
             Random rng = new Random();
-            nameCombinations = new string[] { "Zombie", "Skeleton", "Undead" };
+            nameCombinations = new string[] { "Zombie", "Skeleton", "Undead", "Lone Survivor" };
             strength = rng.Next(0, 20);
             dexterity = rng.Next(0, 20);
             agility = rng.Next(0, 20);

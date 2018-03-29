@@ -35,7 +35,7 @@ namespace Eclipse
                 "Wood Plank"
             },
             {
-                "Small Copper Pouch",
+                "Scrap Metal",
                 "Silver Coin",
                 "Rugged Wooden Sword",
                 "Potion",

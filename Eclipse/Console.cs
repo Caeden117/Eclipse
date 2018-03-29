@@ -85,7 +85,8 @@ namespace Eclipse
                     MessageBox.Show("Woah there!" + newSection() + "You have healed yourself to the point where you've hit your overflow max! Any extra health would be discarded forever, so use your healing items wisely!", "Eclipse Tutorial - Overflow Maximum Reached", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            healthoverflow.Value = Convert.ToInt32(healthoverflow.Maximum * (Properties.Settings.Default.HPOverflow / (decimal)Properties.Settings.Default.HPOverflowMax));
+            if (Properties.Settings.Default.HPOverflow <= Properties.Settings.Default.HPOverflowMax)
+                healthoverflow.Value = Convert.ToInt32(healthoverflow.Maximum * (Properties.Settings.Default.HPOverflow / (decimal)Properties.Settings.Default.HPOverflowMax));
             Properties.Settings.Default.HPOverflowMax = Convert.ToInt32(Math.Round(Convert.ToDouble(Properties.Settings.Default.HPMax / 4)));
 
             if (Properties.Settings.Default.HP <= Properties.Settings.Default.HPMax && Properties.Settings.Default.HP >= 0)
@@ -130,6 +131,7 @@ namespace Eclipse
             {
                 weapon.Text = "Weapon: " + Properties.Settings.Default.weapon + " (" + itemList.find(Properties.Settings.Default.weapon).durability + " Durability)";
             }
+            weapon.ForeColor = Color.FromName(itemList.rarityColors[itemList.find(Properties.Settings.Default.weapon).rarityLevel]);
 
             Properties.Settings.Default.carryingCap = 120 + (20 * getModifier(Properties.Settings.Default.Strength));
             float weight3 = 0;
@@ -732,6 +734,10 @@ namespace Eclipse
             for(var i = 0; i < rng.Next(1, 3); i++)
             {
                 int tableLevel = Properties.Settings.Default.Level - 5;
+                if (Properties.Settings.Default.Luck >= 15)
+                    tableLevel++;
+                if (Properties.Settings.Default.Luck >= 20)
+                    tableLevel++;
                 if (tableLevel > lootTables.lootingTables.Length)
                     tableLevel = lootTables.lootingTables.Length;
                 if (tableLevel >= 0)
@@ -779,8 +785,12 @@ namespace Eclipse
             saveGame();
         }
 
-        public void saveGame()
+        /// <summary>
+        /// Saves the game as a file. Returns true if the operation completed successfully.
+        /// </summary>
+        public bool saveGame()
         {
+            mainConsole.AppendText(newSection() + "Saving game...");
             if (saveFile.ShowDialog() == DialogResult.OK)
             {
                 using (StreamWriter save = new StreamWriter(saveFile.FileName))
@@ -794,11 +804,23 @@ namespace Eclipse
                         save.WriteLine(inventoryItem);
                     }
                 }
+                mainConsole.AppendText(newSection() + "Game saved!");
+                return true;
+            }
+            else
+            {
+                mainConsole.AppendText(newSection() + "Saving cancelled!");
+                return false;
             }
         }
 
-        public void loadGame()
+        /// <summary>
+        /// Loads the game from a file. Returns true if the operation completed successfully.
+        /// </summary>
+        public bool loadGame()
         {
+            mainConsole.Clear();
+            mainConsole.AppendText(newSection() + "Loading game from a save file...");
             if (openFile.ShowDialog() == DialogResult.OK)
             {
                 if (File.Exists(openFile.FileName))
@@ -831,7 +853,19 @@ namespace Eclipse
                             inventory.Items.Add(lines[i]);
                         }
                     }
+                    mainConsole.AppendText(newSection() + "Game loaded successfully!");
+                    return true;
                 }
+                else
+                {
+                    mainConsole.AppendText(newSection() + "Loading game failed: The file does not exist.");
+                    return false;
+                }
+            }
+            else
+            {
+                mainConsole.AppendText(newSection() + "Loading game failed: Operation cancelled by user.");
+                return false;
             }
         }
 
