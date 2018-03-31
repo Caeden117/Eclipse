@@ -819,7 +819,6 @@ namespace Eclipse
         /// </summary>
         public bool loadGame()
         {
-            mainConsole.Clear();
             mainConsole.AppendText(newSection() + "Loading game from a save file...");
             if (openFile.ShowDialog() == DialogResult.OK)
             {
@@ -827,6 +826,7 @@ namespace Eclipse
                 {
                     var lines = File.ReadAllLines(openFile.FileName);
                     inventory.Items.Clear();
+                    mainConsole.Clear();
                     int tick = 0;
                     foreach (System.Configuration.SettingsProperty value in Properties.Settings.Default.Properties)
                     {
@@ -872,6 +872,30 @@ namespace Eclipse
         private void loadButton_Click(object sender, EventArgs e)
         {
             loadGame();
+        }
+
+        private void Console_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            DialogResult saveGameBeforeClosing = MessageBox.Show("Do you want to save the game before you exit?", "Eclipse - Save Game?", MessageBoxButtons.YesNoCancel);
+            if (saveGameBeforeClosing == DialogResult.No)
+            {
+                Application.Exit();
+            }
+            else if (saveGameBeforeClosing == DialogResult.Yes)
+            {
+                if (saveGame())
+                {
+                    Application.Exit();
+                }
+                else
+                {
+                    new Console().Show();
+                }
+            }
+            else
+            {
+                new Console().Show();
+            }
         }
     }
 }

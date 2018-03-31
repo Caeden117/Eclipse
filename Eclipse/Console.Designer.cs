@@ -563,6 +563,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "Console";
             this.Text = "Eclipse";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Console_FormClosed);
             this.Load += new System.EventHandler(this.Console_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
