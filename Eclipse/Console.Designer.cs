@@ -77,6 +77,8 @@
             this.saveFile = new System.Windows.Forms.SaveFileDialog();
             this.saveButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
+            this.exitButton = new System.Windows.Forms.Button();
+            this.mainMenu = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // name
@@ -515,11 +517,33 @@
             this.loadButton.UseVisualStyleBackColor = true;
             this.loadButton.Click += new System.EventHandler(this.loadButton_Click);
             // 
+            // exitButton
+            // 
+            this.exitButton.Location = new System.Drawing.Point(665, 523);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(88, 25);
+            this.exitButton.TabIndex = 41;
+            this.exitButton.Text = "🗙Exit";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
+            // mainMenu
+            // 
+            this.mainMenu.Location = new System.Drawing.Point(571, 523);
+            this.mainMenu.Name = "mainMenu";
+            this.mainMenu.Size = new System.Drawing.Size(88, 25);
+            this.mainMenu.TabIndex = 42;
+            this.mainMenu.Text = "🚪 Main Menu";
+            this.mainMenu.UseVisualStyleBackColor = true;
+            this.mainMenu.Click += new System.EventHandler(this.mainMenu_Click);
+            // 
             // Console
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 560);
+            this.Controls.Add(this.mainMenu);
+            this.Controls.Add(this.exitButton);
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.rest);
@@ -620,5 +644,7 @@
         private System.Windows.Forms.SaveFileDialog saveFile;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button loadButton;
+        private System.Windows.Forms.Button exitButton;
+        private System.Windows.Forms.Button mainMenu;
     }
 }

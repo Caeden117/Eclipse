@@ -37,6 +37,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.betaTimer = new System.Windows.Forms.Timer(this.components);
+            this.exitButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -116,11 +117,22 @@
             this.betaTimer.Interval = 1000;
             this.betaTimer.Tick += new System.EventHandler(this.betaTimer_Tick);
             // 
+            // exitButton
+            // 
+            this.exitButton.Location = new System.Drawing.Point(237, 390);
+            this.exitButton.Name = "exitButton";
+            this.exitButton.Size = new System.Drawing.Size(88, 25);
+            this.exitButton.TabIndex = 42;
+            this.exitButton.Text = "🗙Exit";
+            this.exitButton.UseVisualStyleBackColor = true;
+            this.exitButton.Click += new System.EventHandler(this.exitButton_Click);
+            // 
             // Title
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(337, 424);
+            this.Controls.Add(this.exitButton);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button3);
@@ -146,6 +158,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Timer betaTimer;
+        private System.Windows.Forms.Button exitButton;
     }
 }
 

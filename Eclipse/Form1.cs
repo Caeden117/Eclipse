@@ -82,5 +82,10 @@ namespace Eclipse
                 MessageBox.Show("Eclipse has detected no active game running. Please start a new game, or load from a file.", "Eclipse - Loading Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

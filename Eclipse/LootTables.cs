@@ -29,24 +29,38 @@ namespace Eclipse
             },
             {
                 "Copper Coin",
-                "Antibiotics",
+                "Log",
                 "Small Potion",
                 "Granola Bar",
                 "Wood Plank"
             },
             {
                 "Scrap Metal",
-                "Silver Coin",
+                "Log",
                 "Rugged Wooden Sword",
                 "Potion",
-                "Raw Meat"
+                "Antibiotics"
             },
             {
                 "Silver Coin",
                 "Potion",
                 "Scrap Metal",
-                "Scrap Metal",
+                "Raw Meat",
                 "Wood Plank"
+            },
+            {
+                "Silver Coin",
+                "Metal Plate",
+                "Scrap Metal",
+                "Potion",
+                "Scrap Metal"
+            },
+            {
+                "Small Silver Pouch",
+                "Metal Plate",
+                "Metal Plate",
+                "Potion",
+                "Large Potion"
             }
         };
     }

@@ -45,7 +45,7 @@ namespace Eclipse
         private void Console_Load(object sender, EventArgs e)
         {
             pausedControls = new Button[] { hunt, scavange, rest, };
-            inventory.Items.Add("Stick");
+            /*inventory.Items.Add("Stick");
             inventory.Items.Add("Wood Plank");
             inventory.Items.Add("Leather Strap");
             inventory.Items.Add("Stick");
@@ -54,7 +54,7 @@ namespace Eclipse
             foreach(string item in itemList.lookupCraft("Workbench").prerequisites)
             {
                 inventory.Items.Add(item);
-            }
+            }*/
             
             if (Properties.Settings.Default.tutorialList.IndexOf("S") == -1 && Properties.Settings.Default.tutorial)
             {
@@ -604,7 +604,7 @@ namespace Eclipse
             {
                 mainConsole.AppendText(System.Environment.NewLine + "You have killed the mob!" + newSection());
                 //int tableLevel = Convert.ToInt32(Math.Floor(Convert.ToDecimal(Properties.Settings.Default.Level / 10)));
-                int xpGain = rng.Next(10, 25);
+                int xpGain = rng.Next(10, 25) * (itemList.find(Properties.Settings.Default.weapon).rarityLevel * 2);
                 Properties.Settings.Default.XP += xpGain;
                 mainConsole.AppendText(System.Environment.NewLine + "You have recieved: " + xpGain + " XP.");
                 Item loot = itemList.find(lootTables.mobLootTable[rng.Next(0, lootTables.mobLootTable.Length)]);
@@ -691,7 +691,7 @@ namespace Eclipse
                         inventory.Items.Add(itemResult);
                     }
                 }
-                Properties.Settings.Default.XP += rng.Next(15, 50);
+                Properties.Settings.Default.XP += rng.Next(15, 50) * Properties.Settings.Default.Level;
                 if (Properties.Settings.Default.tutorialList.IndexOf("C") == -1 && Properties.Settings.Default.tutorial)
                 {
                     Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "C";
@@ -731,29 +731,26 @@ namespace Eclipse
             mainConsole.AppendText(System.Environment.NewLine + "You have finished scavaging.");
             scavangeLoop.Enabled = false;
             isPaused = false;
-            for(var i = 0; i < rng.Next(1, 3); i++)
+            int tableLevel = Properties.Settings.Default.Level - 5;
+            if (Properties.Settings.Default.Luck >= 15)
+                tableLevel++;
+            if (Properties.Settings.Default.Luck >= 20)
+                tableLevel++;
+            if (tableLevel > lootTables.lootingTables.Length)
+                tableLevel = lootTables.lootingTables.Length;
+            if (tableLevel >= 0)
             {
-                int tableLevel = Properties.Settings.Default.Level - 5;
-                if (Properties.Settings.Default.Luck >= 15)
-                    tableLevel++;
-                if (Properties.Settings.Default.Luck >= 20)
-                    tableLevel++;
-                if (tableLevel > lootTables.lootingTables.Length)
-                    tableLevel = lootTables.lootingTables.Length;
-                if (tableLevel >= 0)
+                for (var b = 0; b < tableLevel + 1; b++)
                 {
-                    for (var b = 0; b < tableLevel + 1; b++)
+                    Item loot = itemList.find(lootTables.lootingTables[b, rng.Next(0, 4)]);
+                    if (weight2 >= Properties.Settings.Default.carryingCap)
                     {
-                        Item loot = itemList.find(lootTables.lootingTables[b, rng.Next(0, 4)]);
-                        if (weight2 >= Properties.Settings.Default.carryingCap)
-                        {
-                            mainConsole.AppendText(System.Environment.NewLine + "You would've recieved " + loot.name + ", but you can't carry any more!");
-                        }
-                        else
-                        {
-                            inventory.Items.Add(loot.name);
-                            mainConsole.AppendText(System.Environment.NewLine + "You have picked up: " + loot.name);
-                        }
+                        mainConsole.AppendText(System.Environment.NewLine + "You would've recieved " + loot.name + ", but you can't carry any more!");
+                    }
+                    else
+                    {
+                        inventory.Items.Add(loot.name);
+                        mainConsole.AppendText(System.Environment.NewLine + "You have picked up: " + loot.name);
                     }
                 }
             }
@@ -804,12 +801,12 @@ namespace Eclipse
                         save.WriteLine(inventoryItem);
                     }
                 }
-                mainConsole.AppendText(newSection() + "Game saved!");
+                mainConsole.AppendText(System.Environment.NewLine + "Game saved!" + newSection());
                 return true;
             }
             else
             {
-                mainConsole.AppendText(newSection() + "Saving cancelled!");
+                mainConsole.AppendText(System.Environment.NewLine + "Saving cancelled!" + newSection());
                 return false;
             }
         }
@@ -853,18 +850,18 @@ namespace Eclipse
                             inventory.Items.Add(lines[i]);
                         }
                     }
-                    mainConsole.AppendText(newSection() + "Game loaded successfully!");
+                    mainConsole.AppendText(System.Environment.NewLine + "Game loaded successfully!" + newSection());
                     return true;
                 }
                 else
                 {
-                    mainConsole.AppendText(newSection() + "Loading game failed: The file does not exist.");
+                    mainConsole.AppendText(System.Environment.NewLine + "Loading game failed: The file does not exist." + newSection());
                     return false;
                 }
             }
             else
             {
-                mainConsole.AppendText(newSection() + "Loading game failed: Operation cancelled by user.");
+                mainConsole.AppendText(System.Environment.NewLine + "Loading game failed: Operation cancelled by user." + newSection());
                 return false;
             }
         }
@@ -896,6 +893,20 @@ namespace Eclipse
             {
                 new Console().Show();
             }
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to exit Eclipse?", "Eclipse - Exit Game?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Close();
+            }
+        }
+
+        private void mainMenu_Click(object sender, EventArgs e)
+        {
+            Hide();
+            new Title().Show();
         }
     }
 }
