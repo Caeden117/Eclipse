@@ -79,6 +79,7 @@
             this.loadButton = new System.Windows.Forms.Button();
             this.exitButton = new System.Windows.Forms.Button();
             this.mainMenu = new System.Windows.Forms.Button();
+            this.settings = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // name
@@ -537,11 +538,22 @@
             this.mainMenu.UseVisualStyleBackColor = true;
             this.mainMenu.Click += new System.EventHandler(this.mainMenu_Click);
             // 
+            // settings
+            // 
+            this.settings.Location = new System.Drawing.Point(477, 523);
+            this.settings.Name = "settings";
+            this.settings.Size = new System.Drawing.Size(88, 25);
+            this.settings.TabIndex = 43;
+            this.settings.Text = "⚙ Settings";
+            this.settings.UseVisualStyleBackColor = true;
+            this.settings.Click += new System.EventHandler(this.settings_Click);
+            // 
             // Console
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 560);
+            this.Controls.Add(this.settings);
             this.Controls.Add(this.mainMenu);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.loadButton);
@@ -646,5 +658,6 @@
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Button mainMenu;
+        private System.Windows.Forms.Button settings;
     }
 }

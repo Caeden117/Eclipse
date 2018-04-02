@@ -76,6 +76,21 @@ namespace Eclipse
             health.Text = "HP: " + Properties.Settings.Default.HP + "/" + Properties.Settings.Default.HPMax;
             name.Text = Properties.Settings.Default.Name;
             clan.Text = Properties.Settings.Default.Clan;
+
+            if (Properties.Settings.Default.itemInQueue != "") //Allows items to be given to the player from outside Console.cs
+            {
+                inventory.Items.Add(Properties.Settings.Default.itemInQueue);
+                mainConsole.AppendText(System.Environment.NewLine + "You have recieved: " + Properties.Settings.Default.itemInQueue);
+                Properties.Settings.Default.itemInQueue = "";
+            }
+
+            if (Properties.Settings.Default.godMode)
+            {
+                Properties.Settings.Default.HP = Properties.Settings.Default.HPMax + Properties.Settings.Default.HPOverflowMax;
+                Properties.Settings.Default.Hunger = 100;
+                Properties.Settings.Default.Infection = 0;
+            }
+
             if (Properties.Settings.Default.HPOverflow >= Properties.Settings.Default.HPOverflowMax)
             {
                 Properties.Settings.Default.HPOverflow = Properties.Settings.Default.HPOverflowMax;
@@ -258,6 +273,8 @@ namespace Eclipse
             {
                 craftButton.Text = "<<< Craft";
             }
+
+            inventory.Sorted = Properties.Settings.Default.sortItems;
 
         }
         
@@ -445,6 +462,7 @@ namespace Eclipse
             else
             {
                 itemName.Text = "No item selected.";
+                itemName.ForeColor = Color.FromName(itemList.rarityColors[0]);
                 itemDescription.Text = "";
                 use.Enabled = false;
                 throwItem.Enabled = false;
@@ -505,7 +523,6 @@ namespace Eclipse
                     mainConsole.AppendText(System.Environment.NewLine + "Your weapon broke after you finished your attack...");
                 }
             }
-            mainConsole.AppendText(System.Environment.NewLine + newWeapon.durability);
         }
 
         private void huntLoop_Tick(object sender, EventArgs e)
@@ -519,13 +536,13 @@ namespace Eclipse
                     damage = 1;
                 }
                 damage *= 2;
-                mainConsole.AppendText(System.Environment.NewLine + "Critical hit! You hit the mob for " + damage + " damage!");
+                mainConsole.AppendText(System.Environment.NewLine + "Critical hit! You deal " + damage + " damage!");
                 mob.health -= damage;
                 damageWeapon();
             }
             else if (attack == 1 + getModifier(Properties.Settings.Default.Agility))
             {
-                int damage = rng.Next(0, itemList.find(Properties.Settings.Default.weapon).amount[0]) + getModifier(Properties.Settings.Default.Strength);
+                int damage = rng.Next(0, itemList.find(Properties.Settings.Default.weapon).amount[0]) + getModifier(Properties.Settings.Default.Strength) < 0 ? 0 : getModifier(Properties.Settings.Default.Strength);
                 if (damage < 1)
                 {
                     damage = 1;
@@ -543,7 +560,7 @@ namespace Eclipse
                     {
                         damage = 1;
                     }
-                    mainConsole.AppendText(System.Environment.NewLine + "You hit the mob for " + damage + " damage!");
+                    mainConsole.AppendText(System.Environment.NewLine + "You deal " + damage + " damage!");
                     mob.health -= damage;
                     damageWeapon();
                 }
@@ -553,10 +570,10 @@ namespace Eclipse
                 }
             }
 
-            attack = rng.Next(1, 20) + ((mob.agility - 10) / 2);
-            if (attack == 20 + ((mob.agility - 10) / 2))
+            attack = rng.Next(1, 20) + getModifier(mob.agility);
+            if (attack == 20 + getModifier(mob.agility))
             {
-                int damage = rng.Next(0, 2 * mob.level) + ((mob.strength - 10) / 2);
+                int damage = rng.Next(0, 2 * mob.level) + getModifier(mob.strength);
                 if (damage < 0)
                 {
                     damage = 0;
@@ -565,11 +582,11 @@ namespace Eclipse
                 mainConsole.AppendText(System.Environment.NewLine + "Critical hit! It hits for " + damage + " damage!");
                 Properties.Settings.Default.HP -= damage;
                 mainConsole.AppendText(System.Environment.NewLine + "You begin to feel sickness flowing through you...");
-                Properties.Settings.Default.Infection += rng.Next(0, 15) - ((Properties.Settings.Default.Constitution - 10) / 2);
+                Properties.Settings.Default.Infection += rng.Next(0, 15) - getModifier(Properties.Settings.Default.Constitution);
             }
-            else if (attack == 1 + ((mob.agility - 10) / 2))
+            else if (attack == 1 + getModifier(mob.agility))
             {
-                int damage = rng.Next(0, 2 * mob.level) + ((mob.strength - 10) / 2);
+                int damage = rng.Next(0, 2 * mob.level) + getModifier(mob.strength);
                 if (damage < 0)
                 {
                     damage = 0;
@@ -581,7 +598,7 @@ namespace Eclipse
             {
                 if (attack >= Properties.Settings.Default.Armor)
                 {
-                    int damage = rng.Next(0, 2 * mob.level) + ((mob.strength - 10) / 2);
+                    int damage = rng.Next(0, 2 * mob.level) + getModifier(mob.strength);
                     if (damage < 0)
                     {
                         damage = 0;
@@ -591,7 +608,7 @@ namespace Eclipse
                     if (rng.Next(0, 10) == 10)
                     {
                         mainConsole.AppendText(System.Environment.NewLine + "You begin to feel sickness flowing through you...");
-                        Properties.Settings.Default.Infection += rng.Next(0, 15) - ((Properties.Settings.Default.Constitution - 10) / 2);
+                        Properties.Settings.Default.Infection += rng.Next(0, 15) - getModifier(Properties.Settings.Default.Constitution);
                     }
                 }
                 else
@@ -740,17 +757,25 @@ namespace Eclipse
                 tableLevel = lootTables.lootingTables.Length;
             if (tableLevel >= 0)
             {
-                for (var b = 0; b < tableLevel + 1; b++)
+                //for (var b = 0; b < tableLevel + 1; b++)
+                for(var b = 0; b < tableLevel; b++)
                 {
-                    Item loot = itemList.find(lootTables.lootingTables[b, rng.Next(0, 4)]);
-                    if (weight2 >= Properties.Settings.Default.carryingCap)
+                    try
                     {
-                        mainConsole.AppendText(System.Environment.NewLine + "You would've recieved " + loot.name + ", but you can't carry any more!");
+                        Item loot = itemList.find(lootTables.lootingTables[b, rng.Next(0, 4)]);
+                        if (weight2 >= Properties.Settings.Default.carryingCap)
+                        {
+                            mainConsole.AppendText(System.Environment.NewLine + "You would've recieved " + loot.name + ", but you can't carry any more!");
+                        }
+                        else
+                        {
+                            inventory.Items.Add(loot.name);
+                            mainConsole.AppendText(System.Environment.NewLine + "You have picked up: " + loot.name);
+                        }
                     }
-                    else
+                    catch (System.IndexOutOfRangeException)
                     {
-                        inventory.Items.Add(loot.name);
-                        mainConsole.AppendText(System.Environment.NewLine + "You have picked up: " + loot.name);
+                        continue;
                     }
                 }
             }
@@ -795,10 +820,14 @@ namespace Eclipse
                     foreach (System.Configuration.SettingsProperty value in Properties.Settings.Default.Properties)
                     {
                         save.WriteLine(value.Name + "|" + Properties.Settings.Default[value.Name]);
+                        if (Properties.Settings.Default.debugMode)
+                            mainConsole.AppendText(System.Environment.NewLine + "Saved property: " + value.Name);
                     }
                     foreach (string inventoryItem in inventory.Items.Cast<String>())
                     {
                         save.WriteLine(inventoryItem);
+                        if (Properties.Settings.Default.debugMode)
+                            mainConsole.AppendText(System.Environment.NewLine + "Saved item: " + inventoryItem);
                     }
                 }
                 mainConsole.AppendText(System.Environment.NewLine + "Game saved!" + newSection());
@@ -844,10 +873,14 @@ namespace Eclipse
                             {
                                 Properties.Settings.Default[lines[i].Split('|').First()] = lines[i].Split('|').Last();
                             }
+                            if (Properties.Settings.Default.debugMode)
+                                mainConsole.AppendText(System.Environment.NewLine + "Loaded property: " + lines[i].Split('|').First());
                         }
                         else
                         {
                             inventory.Items.Add(lines[i]);
+                            if (Properties.Settings.Default.debugMode)
+                                mainConsole.AppendText(System.Environment.NewLine + "Loaded item: " + lines[i]);
                         }
                     }
                     mainConsole.AppendText(System.Environment.NewLine + "Game loaded successfully!" + newSection());
@@ -907,6 +940,11 @@ namespace Eclipse
         {
             Hide();
             new Title().Show();
+        }
+
+        private void settings_Click(object sender, EventArgs e)
+        {
+            new Settings().Show();
         }
     }
 }

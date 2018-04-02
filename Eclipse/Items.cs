@@ -16,6 +16,21 @@ namespace Eclipse
         public Item empty = new Item("", "", false, 0, new int[] { }, new int[] { }, 0);
 
         /// <summary>
+        /// If the item is the exact same as the item passed into the function. Generally used to compare against Items.empty
+        /// </summary>
+        public bool isAlso(Item item1, Item item2)
+        {
+            if (item1.name == item2.name && item1.description == item2.description && item1.isUseable == item2.isUseable && item1.weight == item2.weight && item1.useMode == item2.useMode && item1.amount == item2.amount && item1.intLevel == item2.intLevel && item1.rarityLevel == item2.rarityLevel)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// An string array containing the color names for rarity colors of Items.
         /// </summary>
         public string[] rarityColors = new string[] { "ControlText", "DarkGreen", "Blue", "DeepPink", "Gold" };
@@ -24,6 +39,7 @@ namespace Eclipse
         /// An string array containing the names of rarity levels, corresponding to the colors inside rarityColors.
         /// </summary>
         public string[] rarityNames = new string[] { "Common", "Uncommon", "Rare", "Epic", "Legendary" };
+
         /// <summary>
         /// A list of every item in Eclipse.
         /// </summary>
@@ -46,7 +62,7 @@ namespace Eclipse
             new Item("Pills", "Basic over-the-counter medications.", true, 0.5f, new int[] { 2, 0 }, new int[] { 5, 5 }, 2),
             new Item("Antibiotics", "\"Perscribed by a doctor.\" What doctor?", true, 1.5f, new int[] { 2, 0 }, new int[] { 25, 15 }, 5, 1),
             new Item("Morphine", "Powerful drug that wipes infections as if it was never there.", true, 3, new int[] { 2, 0 }, new int[] { 55, 25 }, 5, 2),
-            new Item("Mythical Potion", "Legends tell of a potion that cures everything. Here it is.", true, 5, new int[] { 0, 1, 2 }, new int[] { -1, -1, -1 }, 12, 5),
+            new Item("Mythical Potion", "Legends tell of a potion that cures everything. Here it is.", true, 5, new int[] { 0, 1, 2 }, new int[] { -1, -1, -1 }, 12, 4),
             new Item("Stick", "It's a stick. You can attack with this, but it'll break easily.", true, 0.5f, new int[] { 3 }, new int[] { 2, 3 }, 0),
             new Item("Copper Coin", "Used for currency.", false, 0.15f, new int[] { }, new int[] { }, 3),
             new Item("Small Copper Pouch", "Contains 10 Copper. The same as 1 Silver.", false, 1.25f, new int[] { }, new int[] { }, 3, 1),
@@ -73,6 +89,8 @@ namespace Eclipse
             new Item("Metal Rod", "A rod of metal, can be used as supports or hilts.", false, 0.4f, new int[] { }, new int[] { }, 1, 1),
             new Item("Flimsy Metal Sword", "A nice start to the metal revolution.", true, 1.35f, new int[] { 3 }, new int[] { 6, 15 }, 5, 1),
             new Item("Sturdy Metal Sword", "A truly remarkable weapon. Cuts with ease.", true, 1.85f, new int[] { 3 }, new int[] { 8, 27 }, 7, 2),
+            new Item("Metal Slab", "A hard surface. Required component in the Forge.", true, 5.25f, new int[] { }, new int[] { }, 7, 1),
+            new Item("Metal Block", "Required component in the Forge.", true, 5.25f, new int[] { }, new int[] { }, 8, 2),
         };
 
         /// <summary>
@@ -101,7 +119,10 @@ namespace Eclipse
             new Craft(new string[] {"Scrap Metal", "Simple Hammer"}, "Metal Rod x4", 4),
             new Craft(new string[] {"Scrap Metal", "Bolt", "Bolt", "Bolt", "Bolt", "Scrap Metal", "Simple Hammer"}, "Metal Plate", 6, 1),
             new Craft(new string[] {"Scrap Metal", "Bolt", "Bolt", "Metal Rod"}, "Flimsy Metal Sword", 7, 1),
-            new Craft(new string[] {"Metal Plate", "Metal Plate", "Bolt", "Bolt", "Bolt", "Bolt", "Metal Rod"}, "Sturdy Metal Sword", 7, 1),
+            new Craft(new string[] {"Metal Plate", "Metal Plate", "Bolt", "Bolt", "Bolt", "Bolt", "Metal Rod"}, "Sturdy Metal Sword", 9, 1),
+            new Craft(new string[] {"Metal Plate", "Metal Plate", "Metal Plate", "Metal Plate", "Bolt", "Bolt", "Bolt", "Bolt", "Simple Hammer"}, "Metal Slab", 8, 1),
+            new Craft(new string[] {"Metal Slab", "Metal Slab", "Bolt", "Bolt", "Bolt", "Bolt", "Simple Hammer"}, "Metal Block", 9, 1),
+            new Craft(new string[] {"Metal Block", "Metal Block", "Metal Slab", "Bolt", "Bolt", "Bolt", "Bolt", "Simple Hammer", "Metal Rod", "Metal Rod"}, "Forge", 9, 1),
         };
 
         /// <summary>
@@ -257,6 +278,10 @@ namespace Eclipse
                 durability = -1;
             }
             rarityLevel = rarity;
+            if (rarityLevel >= new Items().rarityColors.Length)
+            {
+                rarityLevel = new Items().rarityColors.Length;
+            }
         }
 
         public void onUse()

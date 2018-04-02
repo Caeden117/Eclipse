@@ -38,7 +38,7 @@ namespace Eclipse
                 "Scrap Metal",
                 "Log",
                 "Rugged Wooden Sword",
-                "Potion",
+                "Hearty Dinner",
                 "Antibiotics"
             },
             {
@@ -61,6 +61,20 @@ namespace Eclipse
                 "Metal Plate",
                 "Potion",
                 "Large Potion"
+            },
+            {
+                "Gold Coin",
+                "Metal Plate",
+                "Flimsy Metal Sword",
+                "Morphine",
+                "Cooked Meat"
+            },
+            {
+                "Large Potion",
+                "Metal Plate",
+                "Scrap Metal",
+                "Metal Slab",
+                "Mythical Potion"
             }
         };
     }
