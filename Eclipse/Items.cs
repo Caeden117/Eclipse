@@ -13,7 +13,7 @@ namespace Eclipse
         /// An empty item. Returned if Items.find() cannot find any item.
         /// </summary>
         /// <returns>Item</returns>
-        public Item empty = new Item("", "", false, 0, new int[] { }, new int[] { }, 0);
+        public static Item empty = new Item("", "", false, 0, new int[] { }, new int[] { }, 0);
 
         /// <summary>
         /// If the item is the exact same as the item passed into the function. Generally used to compare against Items.empty
@@ -33,12 +33,12 @@ namespace Eclipse
         /// <summary>
         /// An string array containing the color names for rarity colors of Items.
         /// </summary>
-        public string[] rarityColors = new string[] { "ControlText", "DarkGreen", "Blue", "DeepPink", "Gold" };
+        public static string[] rarityColors = new string[] { "ControlText", "DarkGreen", "Blue", "DeepPink", "Gold" };
 
         /// <summary>
         /// An string array containing the names of rarity levels, corresponding to the colors inside rarityColors.
         /// </summary>
-        public string[] rarityNames = new string[] { "Common", "Uncommon", "Rare", "Epic", "Legendary" };
+        public static string[] rarityNames = new string[] { "Common", "Uncommon", "Rare", "Epic", "Legendary" };
 
         /// <summary>
         /// A list of every item in Eclipse.
@@ -89,8 +89,8 @@ namespace Eclipse
             new Item("Metal Rod", "A rod of metal, can be used as supports or hilts.", false, 0.4f, new int[] { }, new int[] { }, 1, 1),
             new Item("Flimsy Metal Sword", "A nice start to the metal revolution.", true, 1.35f, new int[] { 3 }, new int[] { 6, 15 }, 5, 1),
             new Item("Sturdy Metal Sword", "A truly remarkable weapon. Cuts with ease.", true, 1.85f, new int[] { 3 }, new int[] { 8, 27 }, 7, 2),
-            new Item("Metal Slab", "A hard surface. Required component in the Forge.", true, 5.25f, new int[] { }, new int[] { }, 7, 1),
-            new Item("Metal Block", "Required component in the Forge.", true, 5.25f, new int[] { }, new int[] { }, 8, 2),
+            new Item("Metal Slab", "A hard surface. Required component in the Forge.", false, 5.25f, new int[] { }, new int[] { }, 7, 1),
+            new Item("Metal Block", "Required component in the Forge.", false, 11.5f, new int[] { }, new int[] { }, 8, 2),
         };
 
         /// <summary>
@@ -278,9 +278,9 @@ namespace Eclipse
                 durability = -1;
             }
             rarityLevel = rarity;
-            if (rarityLevel >= new Items().rarityColors.Length)
+            if (rarityLevel >= Items.rarityColors.Length)
             {
-                rarityLevel = new Items().rarityColors.Length;
+                rarityLevel = Items.rarityColors.Length; //Let it be known of the dangers of System.StackOverflowException
             }
         }
 

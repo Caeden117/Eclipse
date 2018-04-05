@@ -124,6 +124,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "CharacterCreation";
             this.Text = "Eclipse - Character Creation";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CharacterCreation_FormClosed);
             this.Load += new System.EventHandler(this.CharacterCreation_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

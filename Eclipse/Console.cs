@@ -44,17 +44,8 @@ namespace Eclipse
 
         private void Console_Load(object sender, EventArgs e)
         {
+            Debug.Write("Checkpoint 3");
             pausedControls = new Button[] { hunt, scavange, rest, };
-            /*inventory.Items.Add("Stick");
-            inventory.Items.Add("Wood Plank");
-            inventory.Items.Add("Leather Strap");
-            inventory.Items.Add("Stick");
-            inventory.Items.Add("Wood Plank");
-            inventory.Items.Add("Leather Strap");
-            foreach(string item in itemList.lookupCraft("Workbench").prerequisites)
-            {
-                inventory.Items.Add(item);
-            }*/
             
             if (Properties.Settings.Default.tutorialList.IndexOf("S") == -1 && Properties.Settings.Default.tutorial)
             {
@@ -91,7 +82,7 @@ namespace Eclipse
                 Properties.Settings.Default.Infection = 0;
             }
 
-            if (Properties.Settings.Default.HPOverflow >= Properties.Settings.Default.HPOverflowMax)
+            if (Properties.Settings.Default.HPOverflow >= Properties.Settings.Default.HPOverflowMax) //Health calculating
             {
                 Properties.Settings.Default.HPOverflow = Properties.Settings.Default.HPOverflowMax;
                 if (Properties.Settings.Default.tutorialList.IndexOf("M") == -1 && Properties.Settings.Default.tutorial)
@@ -103,13 +94,11 @@ namespace Eclipse
             if (Properties.Settings.Default.HPOverflow <= Properties.Settings.Default.HPOverflowMax)
                 healthoverflow.Value = Convert.ToInt32(healthoverflow.Maximum * (Properties.Settings.Default.HPOverflow / (decimal)Properties.Settings.Default.HPOverflowMax));
             Properties.Settings.Default.HPOverflowMax = Convert.ToInt32(Math.Round(Convert.ToDouble(Properties.Settings.Default.HPMax / 4)));
-
             if (Properties.Settings.Default.HP <= Properties.Settings.Default.HPMax && Properties.Settings.Default.HP >= 0)
                 healthbar.Value = Convert.ToInt32(healthbar.Maximum * (Properties.Settings.Default.HP / (decimal)Properties.Settings.Default.HPMax));
-
             healthsmall.Value = 100;
 
-            xp.Text = "Level: " + Properties.Settings.Default.Level;
+            xp.Text = "Level: " + Properties.Settings.Default.Level; //Level calculating
             if (Properties.Settings.Default.XP <= Properties.Settings.Default.XPMax)
                 xpbar.Value = Convert.ToInt32(xpbar.Maximum * (Properties.Settings.Default.XP / (decimal)Properties.Settings.Default.XPMax));
             if (Properties.Settings.Default.XP >= Properties.Settings.Default.XPMax)
@@ -128,13 +117,16 @@ namespace Eclipse
                 LevelUp levelUp = new LevelUp();
                 levelUp.Show();
             }
+
             hunger.Text = "Hunger: " + Properties.Settings.Default.Hunger;
             hungerbar.Value = Properties.Settings.Default.Hunger;
-            infection.Text = "Infection: " + Properties.Settings.Default.Infection;
+
+            infection.Text = "Infection: " + Properties.Settings.Default.Infection; //Invection calculating
             if (Properties.Settings.Default.Infection <= 100)
                 infectionbar.Value = Properties.Settings.Default.Infection;
             if (Properties.Settings.Default.HPOverflowMax > 100)
                 Properties.Settings.Default.HPOverflowMax = 100;
+
             if (Properties.Settings.Default.HPOverflow > Properties.Settings.Default.HPOverflowMax)
                 Properties.Settings.Default.HP = Properties.Settings.Default.HPMax + Properties.Settings.Default.HPOverflowMax;
 
@@ -146,20 +138,20 @@ namespace Eclipse
             {
                 weapon.Text = "Weapon: " + Properties.Settings.Default.weapon + " (" + itemList.find(Properties.Settings.Default.weapon).durability + " Durability)";
             }
-            weapon.ForeColor = Color.FromName(itemList.rarityColors[itemList.find(Properties.Settings.Default.weapon).rarityLevel]);
+            weapon.ForeColor = Color.FromName(Items.rarityColors[itemList.find(Properties.Settings.Default.weapon).rarityLevel]);
 
-            Properties.Settings.Default.carryingCap = 120 + (20 * getModifier(Properties.Settings.Default.Strength));
+
+            Properties.Settings.Default.carryingCap = 120 + (20 * getModifier(Properties.Settings.Default.Strength)); //Weight calculating
             float weight3 = 0;
             for (var i = 0; i < inventory.Items.Count; i++)
             {
-                if (itemList.find(inventory.Items[i].ToString()).name != itemList.empty.name)
+                if (itemList.find(inventory.Items[i].ToString()).name != Items.empty.name)
                 {
                     weight3 += itemList.find(inventory.Items[i].ToString()).weight;
                 }
             }
             weight2 = weight3;
             weight.Text = "Weight: " + weight2 + " / " + Properties.Settings.Default.carryingCap;
-
             if (weight2 > Properties.Settings.Default.carryingCap)
             {
                 if (Properties.Settings.Default.tutorialList.IndexOf("W") == -1 && Properties.Settings.Default.tutorial)
@@ -179,6 +171,7 @@ namespace Eclipse
                 Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "I";
                 MessageBox.Show("Uh oh! It appears that you've been Infected!" + newSection() + "Infection is caused by being hit by a Zombie, or by eating rotten meat." + newSection() + "Until Infection reaches 0, you will periodically take damage! When Infection reaches 100, it's game over!" + newSection() + "Infection can decrease over time, or be cured with items.", "Eclipse Tutorial - Infection", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
             if (Properties.Settings.Default.HP > Properties.Settings.Default.HPMax)
             {
                 if (Properties.Settings.Default.tutorialList.IndexOf("O") == -1 && Properties.Settings.Default.tutorial)
@@ -197,8 +190,10 @@ namespace Eclipse
                 healthoverflow.Visible = false;
                 healthbar.Visible = true;
             }
+
             craftItem.Enabled = craft.Items.Count > 0 ? true : false;
-            foreach (var recipe in itemList.recipes.Where(g => g.craftLevel <= Properties.Settings.Default.craftLevel || g.craftLevel == 0))
+
+            foreach (var recipe in itemList.recipes.Where(g => g.craftLevel <= Properties.Settings.Default.craftLevel || g.craftLevel == 0)) //Determining what items can be crafted
             {
                 List<string> item2 = new List<string>(inventory.Items.Cast<String>().ToList());
                 var recipeCount = 0;
@@ -424,7 +419,7 @@ namespace Eclipse
             {
                 throwItem.Enabled = true;
                 itemName.Text = itemList.find(inventory.SelectedItem.ToString()).name;
-                itemName.ForeColor = Color.FromName(itemList.rarityColors[itemList.find(inventory.SelectedItem.ToString()).rarityLevel]);
+                itemName.ForeColor = Color.FromName(Items.rarityColors[itemList.find(inventory.SelectedItem.ToString()).rarityLevel]);
                 if (Properties.Settings.Default.Intelligence >= itemList.find(inventory.SelectedItem.ToString()).intLevel)
                 {
                     itemDescription.Text = itemList.find(inventory.SelectedItem.ToString()).description;
@@ -462,7 +457,7 @@ namespace Eclipse
             else
             {
                 itemName.Text = "No item selected.";
-                itemName.ForeColor = Color.FromName(itemList.rarityColors[0]);
+                itemName.ForeColor = Color.FromName(Items.rarityColors[0]);
                 itemDescription.Text = "";
                 use.Enabled = false;
                 throwItem.Enabled = false;
@@ -488,7 +483,7 @@ namespace Eclipse
                     Properties.Settings.Default.weapon = itemList.find(inventory.SelectedItem.ToString()).name;
                     use.Text = "Put Away";
                 }
-                weapon.ForeColor = Color.FromName(itemList.rarityColors[itemList.find(Properties.Settings.Default.weapon).rarityLevel]);
+                weapon.ForeColor = Color.FromName(Items.rarityColors[itemList.find(Properties.Settings.Default.weapon).rarityLevel]);
             }
         }
 
@@ -845,6 +840,7 @@ namespace Eclipse
         /// </summary>
         public bool loadGame()
         {
+            Debug.Write("Checkpoint 3");
             mainConsole.AppendText(newSection() + "Loading game from a save file...");
             if (openFile.ShowDialog() == DialogResult.OK)
             {

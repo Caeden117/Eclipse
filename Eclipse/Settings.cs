@@ -50,7 +50,7 @@ namespace Eclipse
         private void button1_Click(object sender, EventArgs e)
         {
             Items item = new Items();
-            if (item.isAlso(item.find(textBox1.Text), item.empty))
+            if (item.isAlso(item.find(textBox1.Text), Items.empty))
             {
                 MessageBox.Show("It cannot be done.");
             }

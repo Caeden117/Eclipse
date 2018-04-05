@@ -77,5 +77,10 @@ namespace Eclipse
         {
             
         }
+
+        private void CharacterCreation_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            new Title().Show();
+        }
     }
 }
