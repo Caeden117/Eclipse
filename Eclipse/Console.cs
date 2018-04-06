@@ -67,7 +67,7 @@ namespace Eclipse
             name.Text = Properties.Settings.Default.Name;
             clan.Text = Properties.Settings.Default.Clan;
 
-            if (name.Right >= mainConsole.Left)
+            if (name.Right >= mainConsole.Left) //Rescaling labels so they are not conflicting with other objects.
             {
                 name.Font = new Font(name.Font.FontFamily, name.Font.Size - 1);
             }
@@ -760,7 +760,7 @@ namespace Eclipse
             mainConsole.AppendText(System.Environment.NewLine + "You have finished scavaging.");
             scavangeLoop.Enabled = false;
             isPaused = false;
-            int tableLevel = Properties.Settings.Default.Level - 5;
+            int tableLevel = Convert.ToInt32(Math.Floor(Convert.ToDecimal(Properties.Settings.Default.Level - 5) / 2));
             if (Properties.Settings.Default.Luck >= 15)
                 tableLevel++;
             if (Properties.Settings.Default.Luck >= 20)
@@ -774,15 +774,18 @@ namespace Eclipse
                 {
                     try
                     {
-                        Item loot = itemList.find(lootTables.lootingTables[b, rng.Next(0, 4)]);
-                        if (weight2 >= Properties.Settings.Default.carryingCap)
+                        if (rng.Next(0, 10) % 2 == 0)
                         {
-                            mainConsole.AppendText(System.Environment.NewLine + "You would've recieved " + loot.name + ", but you can't carry any more!");
-                        }
-                        else
-                        {
-                            inventory.Items.Add(loot.name);
-                            mainConsole.AppendText(System.Environment.NewLine + "You have picked up: " + loot.name);
+                            Item loot = itemList.find(lootTables.lootingTables[b, rng.Next(0, 4)]);
+                            if (weight2 >= Properties.Settings.Default.carryingCap)
+                            {
+                                mainConsole.AppendText(System.Environment.NewLine + "You would've recieved " + loot.name + ", but you can't carry any more!");
+                            }
+                            else
+                            {
+                                inventory.Items.Add(loot.name);
+                                mainConsole.AppendText(System.Environment.NewLine + "You have picked up: " + loot.name);
+                            }
                         }
                     }
                     catch (System.IndexOutOfRangeException)
