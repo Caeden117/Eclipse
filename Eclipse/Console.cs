@@ -44,7 +44,6 @@ namespace Eclipse
 
         private void Console_Load(object sender, EventArgs e)
         {
-            Debug.Write("Checkpoint 3");
             pausedControls = new Button[] { hunt, scavange, rest, };
             
             if (Properties.Settings.Default.tutorialList.IndexOf("S") == -1 && Properties.Settings.Default.tutorial)
@@ -67,6 +66,23 @@ namespace Eclipse
             health.Text = "HP: " + Properties.Settings.Default.HP + "/" + Properties.Settings.Default.HPMax;
             name.Text = Properties.Settings.Default.Name;
             clan.Text = Properties.Settings.Default.Clan;
+
+            if (name.Right >= mainConsole.Left)
+            {
+                name.Font = new Font(name.Font.FontFamily, name.Font.Size - 1);
+            }
+            if (clan.Right >= mainConsole.Left)
+            {
+                clan.Font = new Font(clan.Font.FontFamily, clan.Font.Size - 1);
+            }
+            if (weight.Right >= requires.Left)
+            {
+                weight.Font = new Font(weight.Font.FontFamily, weight.Font.Size - 1);
+            }
+            if (weight.Right < requires.Left - 5)
+            {
+                weight.Font = new Font(weight.Font.FontFamily, weight.Font.Size + 1);
+            }
 
             if (Properties.Settings.Default.itemInQueue != "") //Allows items to be given to the player from outside Console.cs
             {
@@ -121,7 +137,7 @@ namespace Eclipse
             hunger.Text = "Hunger: " + Properties.Settings.Default.Hunger;
             hungerbar.Value = Properties.Settings.Default.Hunger;
 
-            infection.Text = "Infection: " + Properties.Settings.Default.Infection; //Invection calculating
+            infection.Text = "Infection: " + Properties.Settings.Default.Infection; //Infection calculating
             if (Properties.Settings.Default.Infection <= 100)
                 infectionbar.Value = Properties.Settings.Default.Infection;
             if (Properties.Settings.Default.HPOverflowMax > 100)
@@ -142,15 +158,16 @@ namespace Eclipse
 
 
             Properties.Settings.Default.carryingCap = 120 + (20 * getModifier(Properties.Settings.Default.Strength)); //Weight calculating
-            float weight3 = 0;
+            weight2 = 0;
             for (var i = 0; i < inventory.Items.Count; i++)
             {
                 if (itemList.find(inventory.Items[i].ToString()).name != Items.empty.name)
                 {
-                    weight3 += itemList.find(inventory.Items[i].ToString()).weight;
+                    weight2 += itemList.find(inventory.Items[i].ToString()).weight;
                 }
             }
-            weight2 = weight3;
+            if (weight2.ToString().Split('.')?.Last().Length > 2)
+                weight2 = float.Parse(weight2.ToString().Substring(0, weight2.ToString().IndexOf('.') + 2));
             weight.Text = "Weight: " + weight2 + " / " + Properties.Settings.Default.carryingCap;
             if (weight2 > Properties.Settings.Default.carryingCap)
             {
@@ -840,7 +857,6 @@ namespace Eclipse
         /// </summary>
         public bool loadGame()
         {
-            Debug.Write("Checkpoint 3");
             mainConsole.AppendText(newSection() + "Loading game from a save file...");
             if (openFile.ShowDialog() == DialogResult.OK)
             {

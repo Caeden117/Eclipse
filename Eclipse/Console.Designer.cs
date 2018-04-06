@@ -304,6 +304,7 @@
             // itemName
             // 
             this.itemName.AutoSize = true;
+            this.itemName.BackColor = System.Drawing.Color.Transparent;
             this.itemName.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.itemName.Location = new System.Drawing.Point(754, 438);
             this.itemName.Name = "itemName";
@@ -429,6 +430,7 @@
             // requires
             // 
             this.requires.AutoSize = true;
+            this.requires.BackColor = System.Drawing.Color.Transparent;
             this.requires.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.requires.Location = new System.Drawing.Point(975, 410);
             this.requires.Name = "requires";

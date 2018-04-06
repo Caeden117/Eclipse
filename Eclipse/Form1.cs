@@ -17,7 +17,6 @@ namespace Eclipse
         
         public Title()
         {
-            Debug.Write("Checkpoint 1");
             InitializeComponent();
         }
 
@@ -62,7 +61,6 @@ namespace Eclipse
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Debug.Write("Checkpoint 2");
             Console console = new Console();
             if (console.loadGame())
             {

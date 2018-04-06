@@ -13,6 +13,7 @@ namespace Eclipse
     public partial class CharacterCreation : Form
     {
         Random rng = new Random();
+        bool createdGame = false;
         string[] tips = new string[] {
             "Stats are randomly chosen on game creation - Base your character off of these!",
             "You can choose one stat to upgrade every level.",
@@ -41,6 +42,7 @@ namespace Eclipse
         {
             if (textBox1.Text != "" && textBox2.Text != "")
             {
+                createdGame = true;
                 if(tutorial.Checked == true)
                 {
                     Properties.Settings.Default.tutorial = true;
@@ -80,7 +82,8 @@ namespace Eclipse
 
         private void CharacterCreation_FormClosed(object sender, FormClosedEventArgs e)
         {
-            new Title().Show();
+            if (createdGame == false)
+                new Title().Show();
         }
     }
 }
