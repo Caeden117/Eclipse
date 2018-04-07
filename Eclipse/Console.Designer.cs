@@ -86,7 +86,7 @@
             // 
             this.name.AutoSize = true;
             this.name.Font = new System.Drawing.Font("Lato", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.name.Location = new System.Drawing.Point(12, 9);
+            this.name.Location = new System.Drawing.Point(3, 9);
             this.name.Name = "name";
             this.name.Size = new System.Drawing.Size(149, 57);
             this.name.TabIndex = 1;
@@ -96,7 +96,7 @@
             // 
             this.clan.AutoSize = true;
             this.clan.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clan.Location = new System.Drawing.Point(17, 66);
+            this.clan.Location = new System.Drawing.Point(8, 66);
             this.clan.Name = "clan";
             this.clan.Size = new System.Drawing.Size(60, 29);
             this.clan.TabIndex = 2;
@@ -104,7 +104,7 @@
             // 
             // healthbar
             // 
-            this.healthbar.Location = new System.Drawing.Point(22, 127);
+            this.healthbar.Location = new System.Drawing.Point(13, 127);
             this.healthbar.Name = "healthbar";
             this.healthbar.Size = new System.Drawing.Size(224, 21);
             this.healthbar.TabIndex = 3;
@@ -113,7 +113,7 @@
             // 
             this.health.AutoSize = true;
             this.health.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.health.Location = new System.Drawing.Point(17, 95);
+            this.health.Location = new System.Drawing.Point(8, 95);
             this.health.Name = "health";
             this.health.Size = new System.Drawing.Size(57, 29);
             this.health.TabIndex = 4;
@@ -123,7 +123,7 @@
             // 
             this.xp.AutoSize = true;
             this.xp.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xp.Location = new System.Drawing.Point(17, 151);
+            this.xp.Location = new System.Drawing.Point(8, 151);
             this.xp.Name = "xp";
             this.xp.Size = new System.Drawing.Size(80, 29);
             this.xp.TabIndex = 5;
@@ -131,7 +131,7 @@
             // 
             // xpbar
             // 
-            this.xpbar.Location = new System.Drawing.Point(22, 183);
+            this.xpbar.Location = new System.Drawing.Point(13, 183);
             this.xpbar.Name = "xpbar";
             this.xpbar.Size = new System.Drawing.Size(224, 21);
             this.xpbar.TabIndex = 6;
@@ -140,7 +140,7 @@
             // 
             this.strength.AutoSize = true;
             this.strength.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.strength.Location = new System.Drawing.Point(17, 325);
+            this.strength.Location = new System.Drawing.Point(8, 325);
             this.strength.Name = "strength";
             this.strength.Size = new System.Drawing.Size(116, 29);
             this.strength.TabIndex = 7;
@@ -151,7 +151,7 @@
             // 
             this.dexterity.AutoSize = true;
             this.dexterity.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dexterity.Location = new System.Drawing.Point(17, 354);
+            this.dexterity.Location = new System.Drawing.Point(8, 354);
             this.dexterity.Name = "dexterity";
             this.dexterity.Size = new System.Drawing.Size(125, 29);
             this.dexterity.TabIndex = 8;
@@ -162,7 +162,7 @@
             // 
             this.constitution.AutoSize = true;
             this.constitution.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.constitution.Location = new System.Drawing.Point(17, 383);
+            this.constitution.Location = new System.Drawing.Point(8, 383);
             this.constitution.Name = "constitution";
             this.constitution.Size = new System.Drawing.Size(154, 29);
             this.constitution.TabIndex = 9;
@@ -173,7 +173,7 @@
             // 
             this.charisma.AutoSize = true;
             this.charisma.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.charisma.Location = new System.Drawing.Point(17, 412);
+            this.charisma.Location = new System.Drawing.Point(8, 412);
             this.charisma.Name = "charisma";
             this.charisma.Size = new System.Drawing.Size(123, 29);
             this.charisma.TabIndex = 10;
@@ -184,7 +184,7 @@
             // 
             this.luck.AutoSize = true;
             this.luck.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.luck.Location = new System.Drawing.Point(17, 441);
+            this.luck.Location = new System.Drawing.Point(8, 441);
             this.luck.Name = "luck";
             this.luck.Size = new System.Drawing.Size(73, 29);
             this.luck.TabIndex = 11;
@@ -195,7 +195,7 @@
             // 
             this.intelligence.AutoSize = true;
             this.intelligence.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.intelligence.Location = new System.Drawing.Point(17, 470);
+            this.intelligence.Location = new System.Drawing.Point(8, 470);
             this.intelligence.Name = "intelligence";
             this.intelligence.Size = new System.Drawing.Size(146, 29);
             this.intelligence.TabIndex = 12;
@@ -212,7 +212,7 @@
             // 
             this.endurance.AutoSize = true;
             this.endurance.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.endurance.Location = new System.Drawing.Point(17, 499);
+            this.endurance.Location = new System.Drawing.Point(8, 499);
             this.endurance.Name = "endurance";
             this.endurance.Size = new System.Drawing.Size(136, 29);
             this.endurance.TabIndex = 13;
@@ -223,7 +223,7 @@
             // 
             this.agility.AutoSize = true;
             this.agility.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.agility.Location = new System.Drawing.Point(17, 528);
+            this.agility.Location = new System.Drawing.Point(8, 528);
             this.agility.Name = "agility";
             this.agility.Size = new System.Drawing.Size(91, 29);
             this.agility.TabIndex = 14;
@@ -234,7 +234,7 @@
             // 
             this.hunger.AutoSize = true;
             this.hunger.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.hunger.Location = new System.Drawing.Point(17, 207);
+            this.hunger.Location = new System.Drawing.Point(8, 207);
             this.hunger.Name = "hunger";
             this.hunger.Size = new System.Drawing.Size(103, 29);
             this.hunger.TabIndex = 15;
@@ -242,14 +242,14 @@
             // 
             // hungerbar
             // 
-            this.hungerbar.Location = new System.Drawing.Point(22, 243);
+            this.hungerbar.Location = new System.Drawing.Point(13, 243);
             this.hungerbar.Name = "hungerbar";
             this.hungerbar.Size = new System.Drawing.Size(224, 21);
             this.hungerbar.TabIndex = 16;
             // 
             // healthsmall
             // 
-            this.healthsmall.Location = new System.Drawing.Point(22, 127);
+            this.healthsmall.Location = new System.Drawing.Point(13, 127);
             this.healthsmall.Name = "healthsmall";
             this.healthsmall.Size = new System.Drawing.Size(224, 10);
             this.healthsmall.TabIndex = 17;
@@ -257,7 +257,7 @@
             // 
             // healthoverflow
             // 
-            this.healthoverflow.Location = new System.Drawing.Point(22, 138);
+            this.healthoverflow.Location = new System.Drawing.Point(13, 138);
             this.healthoverflow.Name = "healthoverflow";
             this.healthoverflow.Size = new System.Drawing.Size(224, 10);
             this.healthoverflow.TabIndex = 18;
@@ -265,7 +265,7 @@
             // 
             // infectionbar
             // 
-            this.infectionbar.Location = new System.Drawing.Point(22, 303);
+            this.infectionbar.Location = new System.Drawing.Point(13, 301);
             this.infectionbar.Name = "infectionbar";
             this.infectionbar.Size = new System.Drawing.Size(224, 21);
             this.infectionbar.TabIndex = 20;
@@ -274,7 +274,7 @@
             // 
             this.infection.AutoSize = true;
             this.infection.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.infection.Location = new System.Drawing.Point(17, 267);
+            this.infection.Location = new System.Drawing.Point(8, 267);
             this.infection.Name = "infection";
             this.infection.Size = new System.Drawing.Size(106, 29);
             this.infection.TabIndex = 19;
@@ -358,7 +358,7 @@
             // 
             this.weapon.AutoSize = true;
             this.weapon.Font = new System.Drawing.Font("Lato", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.weapon.Location = new System.Drawing.Point(247, 6);
+            this.weapon.Location = new System.Drawing.Point(238, 6);
             this.weapon.Name = "weapon";
             this.weapon.Size = new System.Drawing.Size(112, 29);
             this.weapon.TabIndex = 27;
@@ -366,16 +366,16 @@
             // 
             // mainConsole
             // 
-            this.mainConsole.Location = new System.Drawing.Point(252, 38);
+            this.mainConsole.Location = new System.Drawing.Point(243, 38);
             this.mainConsole.Name = "mainConsole";
             this.mainConsole.ReadOnly = true;
-            this.mainConsole.Size = new System.Drawing.Size(501, 367);
+            this.mainConsole.Size = new System.Drawing.Size(510, 367);
             this.mainConsole.TabIndex = 28;
             this.mainConsole.Text = "";
             // 
             // hunt
             // 
-            this.hunt.Location = new System.Drawing.Point(252, 409);
+            this.hunt.Location = new System.Drawing.Point(243, 409);
             this.hunt.Name = "hunt";
             this.hunt.Size = new System.Drawing.Size(88, 25);
             this.hunt.TabIndex = 29;
@@ -460,7 +460,7 @@
             // scavange
             // 
             this.scavange.Enabled = false;
-            this.scavange.Location = new System.Drawing.Point(346, 409);
+            this.scavange.Location = new System.Drawing.Point(337, 409);
             this.scavange.Name = "scavange";
             this.scavange.Size = new System.Drawing.Size(88, 25);
             this.scavange.TabIndex = 37;
@@ -475,7 +475,7 @@
             // 
             // rest
             // 
-            this.rest.Location = new System.Drawing.Point(440, 409);
+            this.rest.Location = new System.Drawing.Point(431, 409);
             this.rest.Name = "rest";
             this.rest.Size = new System.Drawing.Size(88, 25);
             this.rest.TabIndex = 38;
@@ -502,7 +502,7 @@
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(252, 523);
+            this.saveButton.Location = new System.Drawing.Point(243, 523);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(88, 25);
             this.saveButton.TabIndex = 39;
@@ -512,7 +512,7 @@
             // 
             // loadButton
             // 
-            this.loadButton.Location = new System.Drawing.Point(346, 523);
+            this.loadButton.Location = new System.Drawing.Point(337, 523);
             this.loadButton.Name = "loadButton";
             this.loadButton.Size = new System.Drawing.Size(88, 25);
             this.loadButton.TabIndex = 40;

@@ -44,10 +44,12 @@ namespace Eclipse
                 {
                     //Load save box.
                     Console console = new Console();
-                    console.saveGame();
-                    Properties.Settings.Default.Reset();
-                    var charCreation = new CharacterCreation();
-                    charCreation.Show();
+                    if (console.saveGame())
+                    {
+                        Properties.Settings.Default.Reset();
+                        var charCreation = new CharacterCreation();
+                        charCreation.Show();
+                    }
                 }
             }
             else
