@@ -21,9 +21,17 @@ Bugs are tracked and submitted as [GitHub Issues](https://guides.github.com/feat
 
 Suggestions, tweaks, or general improvements to Eclipse can help it become better. But some ideas will be suggested more then others. Before submitting a suggestion, please search and see if your idea has already been suggested and/or added.
 
+**When creating suggestions, be wary that:**
+* Crafting recipes are limited to **one output**.
+* Adding completely new mechanics will be difficult, and will take a lot of persuading to add them.
+* Modding support is not planned but if needed it will be.
+* Clearly overpowered stuff (High damage and durability but get it as a mob drop) will instantly be removed.
+
 **Creating Good Suggestions:**
 
 * **Be clear** about your idea.
-* **Be detailed as well.** If you're suggesting items, include specific details such as how much HP it'll restore, how much Infection it will give, etc.
+* **Be detailed with what your Items will do.** If you're suggesting items, include specific details such as the minimum Intelligence to use it, what it'll do, the rarity of the item, how you'll come across this (Looting, hunting, crafting, etc.)
+* **Want to add new crafting recipes?** Explain why you think it would work with the items you need and the item you'll get.
+* **Maybe you want a whole new section of items and crafting recipes in Eclipse?** Tell us why you think these items should be added to Eclipse
 
 (More to come lol)
