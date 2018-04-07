@@ -406,5 +406,17 @@ namespace Eclipse.Properties {
                 this["itemInQueue"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool notStable {
+            get {
+                return ((bool)(this["notStable"]));
+            }
+            set {
+                this["notStable"] = value;
+            }
+        }
     }
 }

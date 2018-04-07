@@ -21,6 +21,7 @@ using System.Windows.Forms;
     C: Crafting first item
     F: Crafting Forge
     B: Crafting Workbench
+    N: Not stable (Health reaches 0)
 */
 
 #pragma warning disable IDE1006 // Naming Styles
@@ -113,6 +114,8 @@ namespace Eclipse
             if (Properties.Settings.Default.HP <= Properties.Settings.Default.HPMax && Properties.Settings.Default.HP >= 0)
                 healthbar.Value = Convert.ToInt32(healthbar.Maximum * (Properties.Settings.Default.HP / (decimal)Properties.Settings.Default.HPMax));
             healthsmall.Value = 100;
+            if (Properties.Settings.Default.HPOverflow > Properties.Settings.Default.HPOverflowMax)
+                Properties.Settings.Default.HP = Properties.Settings.Default.HPMax + Properties.Settings.Default.HPOverflowMax;
 
             xp.Text = "Level: " + Properties.Settings.Default.Level; //Level calculating
             if (Properties.Settings.Default.XP <= Properties.Settings.Default.XPMax)
@@ -142,9 +145,31 @@ namespace Eclipse
                 infectionbar.Value = Properties.Settings.Default.Infection;
             if (Properties.Settings.Default.HPOverflowMax > 100)
                 Properties.Settings.Default.HPOverflowMax = 100;
-
-            if (Properties.Settings.Default.HPOverflow > Properties.Settings.Default.HPOverflowMax)
-                Properties.Settings.Default.HP = Properties.Settings.Default.HPMax + Properties.Settings.Default.HPOverflowMax;
+            if (Properties.Settings.Default.Infection >= 100 && !Properties.Settings.Default.notStable)
+                onDeath();
+            if (Properties.Settings.Default.notStable)
+            {
+                if (!isPaused)
+                {
+                    isPaused = true;
+                    Properties.Settings.Default.Infection = 0;
+                    if (Properties.Settings.Default.tutorialList.IndexOf("N") == -1 && Properties.Settings.Default.tutorial)
+                    {
+                        Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "N";
+                        MessageBox.Show("Uh oh! You are not stable!" + newSection() + "This is caused when your health reaches 0 or infection reaches 100. While you are not stable, you cannot do anything! Your Infection has been reset and will now increase every second." + newSection() + "When Infection reaches 100, it's game over! You can become stable by using any item that restores Infection.", "Eclipse Tutorial - Not Stable", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    mainConsole.AppendText(newSection() + "You are no longer stable. Over time, your Infection will increase and you will soon die!");
+                    notStableTick.Enabled = true;
+                }
+            }
+            else
+            {
+                if (infectionbar.Value > 0 && Properties.Settings.Default.tutorialList.IndexOf("I") == -1 && Properties.Settings.Default.tutorial)
+                {
+                    Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "I";
+                    MessageBox.Show("Uh oh! It appears that you've been Infected!" + newSection() + "Infection is caused by being hit by a Zombie, or by eating rotten meat." + newSection() + "Until Infection reaches 0, you will periodically take damage! When Infection reaches 100, it's game over!" + newSection() + "Infection can decrease over time, or be cured with items.", "Eclipse Tutorial - Infection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
 
             if (Properties.Settings.Default.weapon == fist.name)
             {
@@ -181,12 +206,6 @@ namespace Eclipse
             else
             {
                 Properties.Settings.Default.overweight = false;
-            }
-
-            if (infectionbar.Value > 0 && Properties.Settings.Default.tutorialList.IndexOf("I") == -1 && Properties.Settings.Default.tutorial)
-            {
-                Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "I";
-                MessageBox.Show("Uh oh! It appears that you've been Infected!" + newSection() + "Infection is caused by being hit by a Zombie, or by eating rotten meat." + newSection() + "Until Infection reaches 0, you will periodically take damage! When Infection reaches 100, it's game over!" + newSection() + "Infection can decrease over time, or be cured with items.", "Eclipse Tutorial - Infection", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             if (Properties.Settings.Default.HP > Properties.Settings.Default.HPMax)
@@ -392,41 +411,48 @@ namespace Eclipse
 
         private void healthDegen_Tick(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.HP > Properties.Settings.Default.HPMax)
+            if (!Properties.Settings.Default.notStable)
             {
-                Properties.Settings.Default.HP--;
-            }
-            if (Properties.Settings.Default.Hunger > 0)
-            {
-                Properties.Settings.Default.Hunger--;
-            }
-            else
-            {
-                if (Properties.Settings.Default.tutorialList.IndexOf("H") == -1 && Properties.Settings.Default.tutorial)
+                if (Properties.Settings.Default.HP > Properties.Settings.Default.HPMax)
                 {
-                    Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "H";
-                    MessageBox.Show("Your hunger has reached 0!" + newSection() + "Health will slowly degenerate if you don't eat food.", "Eclipse Tutorial - Hunger", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Properties.Settings.Default.HP--;
                 }
-                Properties.Settings.Default.HP--;
-                if (getModifier(Properties.Settings.Default.Endurance) < 0)
+                if (Properties.Settings.Default.Hunger > 0)
                 {
-                    Properties.Settings.Default.HP -= getModifier(Properties.Settings.Default.Endurance) / 2;
+                    Properties.Settings.Default.Hunger--;
+                }
+                else
+                {
+                    if (Properties.Settings.Default.tutorialList.IndexOf("H") == -1 && Properties.Settings.Default.tutorial)
+                    {
+                        Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "H";
+                        MessageBox.Show("Your hunger has reached 0!" + newSection() + "Health will slowly degenerate if you don't eat food.", "Eclipse Tutorial - Hunger", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    Properties.Settings.Default.HP--;
+                    if (getModifier(Properties.Settings.Default.Endurance) < 0)
+                    {
+                        Properties.Settings.Default.HP -= getModifier(Properties.Settings.Default.Endurance) / 2;
+                    }
                 }
             }
         }
 
         private void infectionDecay_Tick(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.Infection > 0) {
-                int damage = rng.Next(0, 7);
-                if (getModifier(Properties.Settings.Default.Endurance) < damage && getModifier(Properties.Settings.Default.Endurance) > 0)
+            if (!Properties.Settings.Default.notStable)
+            {
+                if (Properties.Settings.Default.Infection > 0)
                 {
-                    damage -= getModifier(Properties.Settings.Default.Endurance);
+                    int damage = rng.Next(0, 7);
+                    if (getModifier(Properties.Settings.Default.Endurance) < damage && getModifier(Properties.Settings.Default.Endurance) > 0)
+                    {
+                        damage -= getModifier(Properties.Settings.Default.Endurance);
+                    }
+                    Properties.Settings.Default.HP -= damage;
+                    Properties.Settings.Default.Infection -= rng.Next(0, 15);
+                    if (Properties.Settings.Default.Infection < 0)
+                        Properties.Settings.Default.Infection = 0;
                 }
-                Properties.Settings.Default.HP -= damage;
-                Properties.Settings.Default.Infection -= rng.Next(0, 15);
-                if (Properties.Settings.Default.Infection < 0)
-                    Properties.Settings.Default.Infection = 0;
             }
         }
 
@@ -628,7 +654,13 @@ namespace Eclipse
                     mainConsole.AppendText(System.Environment.NewLine + "It missed!");
                 }
             }
-
+            if (Properties.Settings.Default.HP <= 0)
+            {
+                Properties.Settings.Default.notStable = true;
+                huntLoop.Enabled = false;
+                isPaused = false;
+                Properties.Settings.Default.HP = 0;
+            }
             if (mob.health <= 0)
             {
                 mainConsole.AppendText(System.Environment.NewLine + "You have killed the mob!" + newSection());
@@ -960,6 +992,60 @@ namespace Eclipse
         private void settings_Click(object sender, EventArgs e)
         {
             new Settings().Show();
+        }
+
+        private void notStableTick_Tick(object sender, EventArgs e)
+        {
+            if (Properties.Settings.Default.notStable)
+            {
+                if (infection.ForeColor == Color.Red)
+                {
+                    infection.ForeColor = Color.FromName("ControlText");
+                }
+                else
+                {
+                    infection.ForeColor = Color.Red;
+                }
+                if (Properties.Settings.Default.Infection < 100)
+                {
+                    Properties.Settings.Default.Infection++;
+                }
+                else
+                {
+                    onDeath();
+                }
+            }
+            else
+            {
+                Properties.Settings.Default.Infection = 0;
+                notStableTick.Enabled = false;
+                isPaused = false;
+                Properties.Settings.Default.HP = 1;
+                mainConsole.AppendText(newSection() + "You are now stable. It's recommended to use healing items or get some rest!");
+            }
+        }
+
+        private void onDeath()
+        {
+            if (inventory.Items.Contains("Totem of Undying"))
+            {
+                Properties.Settings.Default.notStable = false;
+                notStableTick.Enabled = false;
+                isPaused = false;
+                inventory.Items.Remove("Totem of Undying");
+                Properties.Settings.Default.HP = Properties.Settings.Default.HPMax;
+                Properties.Settings.Default.Hunger = 100;
+                Properties.Settings.Default.Infection = 0;
+                mainConsole.AppendText(newSection() + "A bright glow accompanies your last breath as you soon become healthy again.");
+            }
+            else
+            {
+                mainConsole.AppendText(newSection() + "You died!");
+                Properties.Settings.Default.notStable = false;
+                notStableTick.Enabled = false;
+                isPaused = false;
+                Hide();
+            }
         }
     }
 }

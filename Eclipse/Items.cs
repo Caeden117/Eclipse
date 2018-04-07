@@ -93,6 +93,7 @@ namespace Eclipse
             new Item("Metal Slab", "A hard surface. Required component in the Forge.", false, 5.25f, new int[] { }, new int[] { }, 7, 1),
             new Item("Metal Block", "Required component in the Forge.", false, 11.5f, new int[] { }, new int[] { }, 8, 2),
             new Item("Forge", "A sturdy surface to easily create old items and unlock new ideas.", true, 7.5f, new int[] { }, new int[] { }, 0, 2),
+            new Item("Totem of Undying", "Legends say those who carry this totem will gain an extra life.", false, 2.35f, new int[] { }, new int[] { }, 0, 4),
         };
 
         /// <summary>
@@ -318,19 +319,26 @@ namespace Eclipse
                 }
                 else if (useMode[i] == 2)
                 {
-                    if (amount[i] == -1)
+                    if (Properties.Settings.Default.notStable)
                     {
-                        Properties.Settings.Default.Infection = 0;
+                        Properties.Settings.Default.notStable = false;
                     }
                     else
                     {
-                        if (Properties.Settings.Default.Infection - amount[i] < 0)
+                        if (amount[i] == -1)
                         {
                             Properties.Settings.Default.Infection = 0;
                         }
                         else
                         {
-                            Properties.Settings.Default.Infection -= amount[i];
+                            if (Properties.Settings.Default.Infection - amount[i] < 0)
+                            {
+                                Properties.Settings.Default.Infection = 0;
+                            }
+                            else
+                            {
+                                Properties.Settings.Default.Infection -= amount[i];
+                            }
                         }
                     }
                 }

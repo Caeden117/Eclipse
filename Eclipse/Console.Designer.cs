@@ -80,6 +80,7 @@
             this.exitButton = new System.Windows.Forms.Button();
             this.mainMenu = new System.Windows.Forms.Button();
             this.settings = new System.Windows.Forms.Button();
+            this.notStableTick = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // name
@@ -550,6 +551,11 @@
             this.settings.UseVisualStyleBackColor = true;
             this.settings.Click += new System.EventHandler(this.settings_Click);
             // 
+            // notStableTick
+            // 
+            this.notStableTick.Interval = 1000;
+            this.notStableTick.Tick += new System.EventHandler(this.notStableTick_Tick);
+            // 
             // Console
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -661,5 +667,6 @@
         private System.Windows.Forms.Button exitButton;
         private System.Windows.Forms.Button mainMenu;
         private System.Windows.Forms.Button settings;
+        private System.Windows.Forms.Timer notStableTick;
     }
 }
