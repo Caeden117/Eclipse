@@ -89,5 +89,10 @@ namespace Eclipse
         {
             Application.Exit();
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://caed.jackz.me");
+        }
     }
 }
