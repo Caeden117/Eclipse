@@ -20,6 +20,7 @@ using System.Windows.Forms;
     W: Over carrying capacity (Overweight)
     C: Crafting first item
     F: Crafting Forge
+    R: Crafting Fire
     B: Crafting Workbench
     N: Not stable (Health reaches 0)
 */
@@ -744,8 +745,17 @@ namespace Eclipse
                         MessageBox.Show("Congratulations on creating your very own Workbench!" + newSection() + "Once used, new crafting recipes will now be available for crafting.", "Eclipse Tutorial - Workbench", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
+                else if (itemResult == "Fire")
+                {
+                    Properties.Settings.Default.craftLevel++;
+                    if (Properties.Settings.Default.tutorialList.IndexOf("R") == -1 && Properties.Settings.Default.tutorial)
+                    {
+                        Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "R";
+                        MessageBox.Show("Congratulations on making a Fire!" + newSection() + "New crafting recipes are now available!", "Eclipse Tutorial - Workbench", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
 
-                if (itemResult != "Workbench" && itemResult != "Forge")
+                if (itemResult != "Workbench" && itemResult != "Forge" && itemResult != "Fire")
                 {
                     for (var i = 0; i < numAmount; i++)
                     {

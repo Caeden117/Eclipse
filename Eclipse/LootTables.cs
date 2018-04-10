@@ -15,11 +15,23 @@ namespace Eclipse
             "Granola Bar",
             "Pills",
             "Leather Strap",
-            "Copper Coin"
+            "Copper Coin",
+            "Carrot",
+            "Tomato",
+            "Potato",
+            "Lettuce",
+            "Wheat"
         };
 
         public string[,] lootingTables = new string[,] //Stuff from looting
         {
+            {
+                "Carrot",
+                "Tomato",
+                "Wood Plank",
+                "Lettuce",
+                "Wheat"
+            },
             {
                 "Leather Strap",
                 "Wood Plank",

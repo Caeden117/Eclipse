@@ -55,8 +55,8 @@ namespace Eclipse
             new Item("Bandage", "Wraps wounds so no infection can get in.", true, 2f, new int[] { 0 }, new int[] { 25 }, 3, 1),
             new Item("Dressing", "Medical-grade bandages that stop wounds fast.", true, 3.5f, new int[] { 0 }, new int[] { 50 }, 3, 2),
             new Item("Rotten Meat", "Meat from an undead. It's probably a good idea to use this as a last resort.", true, 1.25f, new int[] { 1, 2 }, new int[] { 15, -25 }, 0),
-            new Item("Granola Bar", "Very plentiful, and a good short-term snack.", true, 0.75f, new int[] { 1 }, new int[] { 15 }, 1),
-            new Item("Sandwich", "Your standard sandwich. Easy to make and easy to eat.", true, 1, new int[] { 1 }, new int[] { 20 }, 3),
+            new Item("Granola Bar", "Very plentiful, and a good short-term snack.", true, 0.75f, new int[] { 1 }, new int[] { 10 }, 1),
+            new Item("Basic Sandwich", "Your standard sandwich. Easy to make and easy to eat.", true, 1, new int[] { 1 }, new int[] { 20 }, 3),
             new Item("Raw Meat", "Meat that is raw, and not yet infected. On it's own, it's not very good.", true, 3.5f, new int[] { 1 }, new int[] { 7 }, 0, 1),
             new Item("Cooked Meat", "Now this is more like it.", true, 4f, new int[] { 1 }, new int[] { 45 }, 0, 2),
             new Item("Hearty Dinner", "This is worth the time it took to create.", true, 7.5f, new int[] { 1 }, new int[] { -1 }, 0, 3),
@@ -79,6 +79,7 @@ namespace Eclipse
             new Item("Rugged Wooden Sword", "If the sword doesn't kill, maybe the splinters will.", true, 0.85f, new int[] { 3 }, new int[] { 4, 5 }, 5),
             new Item("Golden Sword", "You're so rich you made a sword out of your wealth. Welp. Good job.", true, 12.75f, new int[] { 3 }, new int[] { 15, 55 }, 15, 4),
             new Item("Workbench", "This Workbench will greatly help in making better items and tools.", true, 2.25f, new int[] { }, new int[] { }, 0, 1),
+            new Item("Fire", "Well, you have to start somewhere.", true, 0, new int[] { }, new int[] { }, 0, 1),
             new Item("Fine Wooden Sword", "A more proper sword, albiet still wooden.", true, 0.85f, new int[] { 3 }, new int[] { 5, 10 }, 5, 1),
             new Item("Leather Pouch", "An empty pouch for storing items.", false, 1.75f, new int[] { }, new int[] { }, 2, 1),
             new Item("Log", "Can be split into planks, or act as a base for objects.", false, 1.85f, new int[] { }, new int[] { }, 2),
@@ -94,6 +95,15 @@ namespace Eclipse
             new Item("Metal Block", "Required component in the Forge.", false, 11.5f, new int[] { }, new int[] { }, 8, 2),
             new Item("Forge", "A sturdy surface to easily create old items and unlock new ideas.", true, 7.5f, new int[] { }, new int[] { }, 0, 2),
             new Item("Totem of Undying", "Legends say those who carry this totem will gain an extra life.", false, 2.35f, new int[] { }, new int[] { }, 0, 4),
+            new Item("Carrot", "An orange carrot that may or may not improve your sight.", false, 0.35f, new int[] { 1 }, new int[] { 5 }, 0),
+            new Item("Potato", "Oh hi! So, how are you holding up? Because I'm a potato!", false, 0.2f, new int[] { 1 }, new int[] { 7 }, 0),
+            new Item("Cooked Potato", "Fresh, baked, ready to eat.", false, 0.2f, new int[] { 1 }, new int[] { 15 }, 4),
+            new Item("Tomato", "The famous red tomato to satisfy your eating needs.", false, 0.2f, new int[] { 1 }, new int[] { 7 }, 0),
+            new Item("Lettuce", "Leaves of lettuce; a prime vegetable.", false, 0.15f, new int[] { 1 }, new int[] { 5 }, 0),
+            new Item("Salad", "Assortments of various vegetables. A good meal.", false, 0.55f, new int[] { 1 }, new int[] { 20 }, 3, 1),
+            new Item("Wheat", "Wheat grown in the wild. Can be used for bread.", false, 0.2f, new int[] { }, new int[] { }, 0),
+            new Item("Bread", "A nice loaf. Recommended to use this for a sandwhich.", false, 0.25f, new int[] { 1 }, new int[] { 7 }, 2),
+            new Item("Hamburger", "Ready to satisfy any one's hunger.", false, 0.25f, new int[] { 1 }, new int[] { 60 }, 2),
         };
 
         /// <summary>
@@ -102,8 +112,9 @@ namespace Eclipse
         /// <returns>Craft[]</returns>
         public Craft[] recipes = new Craft[]
         {
+            new Craft(new string[] {"Wood Plank", "Wood Plank", "Wood Plank"}, "Fire", 0),
             new Craft(new string[] {"Wood Plank", "Leather Strap", "Stick"}, "Rugged Wooden Sword", 5),
-            new Craft(new string[] {"Wood Plank", "Wood Plank", "Leather Strap", "Leather Strap", "Stick"}, "Fine Wooden Sword", 7, 1),
+            new Craft(new string[] {"Wood Plank", "Wood Plank", "Leather Strap", "Leather Strap", "Stick"}, "Fine Wooden Sword", 7, 2),
             new Craft(new string[] {"Rag", "Rag"}, "Bandage", 2),
             new Craft(new string[] { "Bandage", "Bandage"}, "Dressing", 3),
             new Craft(new string[] {"Stick", "Wood Plank", "Leather Strap", "Wood Plank"}, "Simple Axe", 4),
@@ -114,18 +125,24 @@ namespace Eclipse
             new Craft(new string[] {"Leather Pouch", "Silver Coin", "Silver Coin", "Silver Coin", "Silver Coin", "Silver Coin", "Silver Coin", "Silver Coin", "Silver Coin", "Silver Coin", "Silver Coin", }, "Small Silver Pouch", 4),
             new Craft(new string[] {"Leather Pouch", "Small Silver Pouch", "Small Silver Pouch", "Small Silver Pouch", "Small Silver Pouch", "Small Silver Pouch", "Small Silver Pouch", "Small Silver Pouch", "Small Silver Pouch", "Small Silver Pouch", "Small Silver Pouch", }, "Large Silver Pouch", 7),
             new Craft(new string[] {"Leather Pouch", "Gold Coin", "Gold Coin", "Gold Coin", "Gold Coin", "Gold Coin", "Gold Coin", "Gold Coin", "Gold Coin", "Gold Coin", "Gold Coin", }, "Small Gold Pouch", 5),
-            new Craft(new string[] {"Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", }, "Gold Bar", 13, 2),
-            new Craft(new string[] {"Gold Bar", "Gold Bar", "Gold Bar", "Stick"}, "Golden Sword", 25, 2),
+            new Craft(new string[] {"Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", "Small Gold Pouch", }, "Gold Bar", 13, 3),
+            new Craft(new string[] {"Gold Bar", "Gold Bar", "Gold Bar", "Stick"}, "Golden Sword", 25, 3),
             new Craft(new string[] {"Log", "Wood Plank", "Wood Plank", "Simple Axe"}, "Workbench", 0),
             new Craft(new string[] {"Stick", "Stick", "Log"}, "Simple Hammer", 4),
             new Craft(new string[] {"Scrap Metal"}, "Bolt x4", 3),
             new Craft(new string[] {"Scrap Metal", "Simple Hammer"}, "Metal Rod x4", 4),
-            new Craft(new string[] {"Scrap Metal", "Bolt", "Bolt", "Bolt", "Bolt", "Scrap Metal", "Simple Hammer"}, "Metal Plate", 6, 1),
-            new Craft(new string[] {"Scrap Metal", "Bolt", "Bolt", "Metal Rod"}, "Flimsy Metal Sword", 7, 1),
-            new Craft(new string[] {"Metal Plate", "Metal Plate", "Bolt", "Bolt", "Bolt", "Bolt", "Metal Rod"}, "Sturdy Metal Sword", 9, 1),
-            new Craft(new string[] {"Metal Plate", "Metal Plate", "Metal Plate", "Metal Plate", "Bolt", "Bolt", "Bolt", "Bolt", "Simple Hammer"}, "Metal Slab", 8, 1),
-            new Craft(new string[] {"Metal Slab", "Metal Slab", "Bolt", "Bolt", "Bolt", "Bolt", "Simple Hammer"}, "Metal Block", 9, 1),
-            new Craft(new string[] {"Metal Block", "Metal Block", "Metal Slab", "Bolt", "Bolt", "Bolt", "Bolt", "Simple Hammer", "Metal Rod", "Metal Rod"}, "Forge", 9, 1),
+            new Craft(new string[] {"Scrap Metal", "Bolt", "Bolt", "Bolt", "Bolt", "Scrap Metal", "Simple Hammer"}, "Metal Plate", 6, 2),
+            new Craft(new string[] {"Scrap Metal", "Bolt", "Bolt", "Metal Rod"}, "Flimsy Metal Sword", 7, 2),
+            new Craft(new string[] {"Metal Plate", "Metal Plate", "Bolt", "Bolt", "Bolt", "Bolt", "Metal Rod"}, "Sturdy Metal Sword", 9, 2),
+            new Craft(new string[] {"Metal Plate", "Metal Plate", "Metal Plate", "Metal Plate", "Bolt", "Bolt", "Bolt", "Bolt", "Simple Hammer"}, "Metal Slab", 8, 2),
+            new Craft(new string[] {"Metal Slab", "Metal Slab", "Bolt", "Bolt", "Bolt", "Bolt", "Simple Hammer"}, "Metal Block", 9, 2),
+            new Craft(new string[] {"Metal Block", "Metal Block", "Metal Slab", "Bolt", "Bolt", "Bolt", "Bolt", "Simple Hammer", "Metal Rod", "Metal Rod"}, "Forge", 9, 2),
+            new Craft(new string[] {"Potato"}, "Cooked Potato", 3, 1),
+            new Craft(new string[] {"Raw Meat"}, "Cooked Meat", 4, 1),
+            new Craft(new string[] {"Lettuce", "Tomato", "Carrot"}, "Salad", 5),
+            new Craft(new string[] {"Wheat", "Wheat", "Wheat"}, "Bread", 2, 1),
+            new Craft(new string[] {"Bread", "Lettuce", "Tomato"}, "Basic Sandwich", 3, 1),
+            new Craft(new string[] {"Bread", "Lettuce", "Tomato", "Cooked Meat", "Carrot", "Lettuce", "Tomato"}, "Hamburger", 7, 1),
         };
 
         /// <summary>
@@ -139,9 +156,9 @@ namespace Eclipse
         }
 
         /// <summary>
-        /// Returns an Item based off of the item's name.
+        /// Returns an Item based off of the item's name. Returns Items.empty if no item with that name exists.
         /// </summary>
-        /// <param name="name">Name of the item. Returns Items.empty if no item with that name exists.</param>
+        /// <param name="name">Name of the item.</param>
         /// <returns>Item</returns>
         public Item find(string name)
         {
@@ -173,9 +190,9 @@ namespace Eclipse
         /// </summary>
         public int intLevel;
         /// <summary>
-        /// 0 = nothing required | 1 = requires Workbench | 2 = requires Forge
+        /// 0 = nothing required | 1 = requires Fire | 2 = requires Workbench | 3 = requires Forge
         /// </summary>
-        public int craftLevel; //0 (default) = nothing required, 1 = needs Workbench, 2 = needs Forge
+        public int craftLevel;
         public Craft(string[] requiredItems, string craftingResult, int intelligenceLevel)
         {
             prerequisites = requiredItems;
@@ -239,7 +256,7 @@ namespace Eclipse
         /// </summary>
         public int intLevel;
         /// <summary>
-        /// How rare it is (Only effects the color in inventory) | Default: 0
+        /// How rare it is. Default: 0
         /// </summary>
         public int rarityLevel;
 

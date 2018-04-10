@@ -26,6 +26,8 @@ namespace Eclipse
             "A higher Agility can improve your accuracy and improve your dodging!",
             "Want more damage with ranged weapons and a higher accuracy of melee weapons? Improve Dexterity!",
             "A high Endurance can lessen the effects of Infection and Hunger!",
+            new Items().items.Length + " Items strong!",
+            "You can craft up to " + new Items().recipes.Length + " Items!",
         };
 
         public CharacterCreation()
