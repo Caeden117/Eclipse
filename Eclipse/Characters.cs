@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -9,7 +10,38 @@ namespace Eclipse
 {
     class Characters
     {
-        public Member[] possibleMembers = new Member[] { };
+        public Random rng = new Random();
+        public static string[] nameCombinations = {
+            "Jesse",
+            "Daniel",
+            "Jack",
+            "Abraham",
+            "Alex",
+            "Alexander",
+            "Frisk",
+            "Tod",
+            "Tom",
+            "Tommy",
+            "Bob",
+            "Robert",
+            "Bobby",
+            "Mary",
+            "Jane",
+            "Jessica",
+            "Jennifer",
+            "Ruby",
+            "Hailey",
+            "Angelina",
+            "Angela"
+        };
+
+        string test = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "test.bob"); //Saving this for later.
+        //https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/how-to-create-a-file-or-folder information about creating folders and stuff.
+
+        public Member newMember()
+        {
+            return new Member(nameCombinations[rng.Next(0, nameCombinations.Length)]);
+        }
     }
 
     public struct Member
@@ -23,15 +55,15 @@ namespace Eclipse
         public int agility;
         public int constitution;
         public int level;
-        public Member(string memberName, int memberHealth, int memberLevel, int memberStrength, int memberDexterity, int memberAgility, int memberConstitution)
+        public Member(string memberName)
         {
             Random rng = new Random();
-            level = memberLevel;
+            level = rng.Next(1, 5);
             name = memberName;
-            strength = memberStrength;
-            dexterity = memberDexterity;
-            agility = memberAgility;
-            constitution = memberConstitution;
+            strength = rng.Next(1 * Convert.ToInt32(Math.Round((decimal)level / 2)), 5 * level);
+            dexterity = rng.Next(1 * Convert.ToInt32(Math.Round((decimal)level / 2)), 5 * level);
+            agility = rng.Next(1 * Convert.ToInt32(Math.Round((decimal)level / 2)), 5 * level);
+            constitution = rng.Next(1 * Convert.ToInt32(Math.Round((decimal)level / 2)), 5 * level);
             health = (level) + ((constitution - 10) / 2);
             healthMax = health;
             armor = level + ((strength - 10) / 2);

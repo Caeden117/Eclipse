@@ -98,6 +98,15 @@ namespace Eclipse
                 Properties.Settings.Default.HP = Properties.Settings.Default.HPMax + Properties.Settings.Default.HPOverflowMax;
                 Properties.Settings.Default.Hunger = 100;
                 Properties.Settings.Default.Infection = 0;
+                health.ForeColor = Color.Gold;
+                infection.ForeColor = Color.Gold;
+                hunger.ForeColor = Color.Gold;
+            }
+            else
+            {
+                health.ForeColor = Color.FromName("ControlText");
+                infection.ForeColor = Color.FromName("ControlText");
+                hunger.ForeColor = Color.FromName("ControlText");
             }
 
             if (Properties.Settings.Default.HPOverflow >= Properties.Settings.Default.HPOverflowMax) //Health calculating
@@ -910,6 +919,7 @@ namespace Eclipse
                     var lines = File.ReadAllLines(openFile.FileName);
                     inventory.Items.Clear();
                     mainConsole.Clear();
+                    bool hasIdentifier = false;
                     int tick = 0;
                     foreach (System.Configuration.SettingsProperty value in Properties.Settings.Default.Properties)
                     {
@@ -930,6 +940,8 @@ namespace Eclipse
                             {
                                 Properties.Settings.Default[lines[i].Split('|').First()] = lines[i].Split('|').Last();
                             }
+                            if (lines[i].Split('|').First() == "identifier")
+                                hasIdentifier = true;
                             if (Properties.Settings.Default.debugMode)
                                 mainConsole.AppendText(System.Environment.NewLine + "Loaded property: " + lines[i].Split('|').First());
                         }
@@ -939,6 +951,12 @@ namespace Eclipse
                             if (Properties.Settings.Default.debugMode)
                                 mainConsole.AppendText(System.Environment.NewLine + "Loaded item: " + lines[i]);
                         }
+                    }
+                    if (!hasIdentifier)
+                    {
+                        Properties.Settings.Default.indentifier = rng.Next(0, Int32.MaxValue);
+                        if (MessageBox.Show("The save file you have provided lacks an identifier, and as such Eclipse has generated one for you. Would you like to save the game to keep this identifier? Identifiers are used to load guild members and other functions.", "Eclipse - Save Game?", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                            saveGame();
                     }
                     mainConsole.AppendText(System.Environment.NewLine + "Game loaded successfully!" + newSection());
                     return true;

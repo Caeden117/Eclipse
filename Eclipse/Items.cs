@@ -34,12 +34,12 @@ namespace Eclipse
         /// <summary>
         /// An string array containing the color names for rarity colors of Items.
         /// </summary>
-        public static string[] rarityColors = new string[] { "ControlText", "DarkGreen", "Blue", "DeepPink", "Gold" };
+        public static string[] rarityColors = new string[] { "ControlText", "DarkGreen", "Blue", "DeepPink", "Gold", "Maroon" };
 
         /// <summary>
         /// An string array containing the names of rarity levels, corresponding to the colors inside rarityColors.
         /// </summary>
-        public static string[] rarityNames = new string[] { "Common", "Uncommon", "Rare", "Epic", "Legendary" };
+        public static string[] rarityNames = new string[] { "Common", "Uncommon", "Rare", "Epic", "Legendary", "Special" };
 
         /// <summary>
         /// A list of every item in Eclipse.
@@ -78,8 +78,9 @@ namespace Eclipse
             new Item("Wood Plank", "Standard material for crafting. It gets the job done.", false, 1.25f, new int[] { }, new int[] { }, 1),
             new Item("Rugged Wooden Sword", "If the sword doesn't kill, maybe the splinters will.", true, 0.85f, new int[] { 3 }, new int[] { 4, 5 }, 5),
             new Item("Golden Sword", "You're so rich you made a sword out of your wealth. Welp. Good job.", true, 12.75f, new int[] { 3 }, new int[] { 15, 55 }, 15, 4),
-            new Item("Workbench", "This Workbench will greatly help in making better items and tools.", true, 2.25f, new int[] { }, new int[] { }, 0, 1),
-            new Item("Fire", "Well, you have to start somewhere.", true, 0, new int[] { }, new int[] { }, 0, 1),
+            new Item("Holy Sword", "You're a cheater, you know that, right?", true, 12.75f, new int[] { 3 }, new int[] { 9999, 999999 }, 15, 5),
+            new Item("Workbench", "You should not have this. Use it to increase crafting level by 1.", true, 2.25f, new int[] { 4 }, new int[] { }, 0, 5),
+            new Item("Fire", "You should not have this. Use it to increase crafting level by 1.", true, 0, new int[] { 4 }, new int[] { }, 0, 5),
             new Item("Fine Wooden Sword", "A more proper sword, albiet still wooden.", true, 0.85f, new int[] { 3 }, new int[] { 5, 10 }, 5, 1),
             new Item("Leather Pouch", "An empty pouch for storing items.", false, 1.75f, new int[] { }, new int[] { }, 2, 1),
             new Item("Log", "Can be split into planks, or act as a base for objects.", false, 1.85f, new int[] { }, new int[] { }, 2),
@@ -93,7 +94,7 @@ namespace Eclipse
             new Item("Sturdy Metal Sword", "A truly remarkable weapon. Cuts with ease.", true, 1.85f, new int[] { 3 }, new int[] { 8, 27 }, 7, 2),
             new Item("Metal Slab", "A hard surface. Required component in the Forge.", false, 5.25f, new int[] { }, new int[] { }, 7, 1),
             new Item("Metal Block", "Required component in the Forge.", false, 11.5f, new int[] { }, new int[] { }, 8, 2),
-            new Item("Forge", "A sturdy surface to easily create old items and unlock new ideas.", true, 7.5f, new int[] { }, new int[] { }, 0, 2),
+            new Item("Forge", "You should not have this. Use it to increase crafting level by 1.", true, 7.5f, new int[] { 4 }, new int[] { }, 0, 5),
             new Item("Totem of Undying", "Legends say those who carry this totem will gain an extra life.", false, 2.35f, new int[] { }, new int[] { }, 0, 4),
             new Item("Carrot", "An orange carrot that may or may not improve your sight.", false, 0.35f, new int[] { 1 }, new int[] { 5 }, 0),
             new Item("Potato", "Oh hi! So, how are you holding up? Because I'm a potato!", false, 0.2f, new int[] { 1 }, new int[] { 7 }, 0),
@@ -103,7 +104,7 @@ namespace Eclipse
             new Item("Salad", "Assortments of various vegetables. A good meal.", false, 0.55f, new int[] { 1 }, new int[] { 20 }, 3, 1),
             new Item("Wheat", "Wheat grown in the wild. Can be used for bread.", false, 0.2f, new int[] { }, new int[] { }, 0),
             new Item("Bread", "A nice loaf. Recommended to use this for a sandwhich.", false, 0.25f, new int[] { 1 }, new int[] { 7 }, 2),
-            new Item("Hamburger", "Ready to satisfy any one's hunger.", false, 0.25f, new int[] { 1 }, new int[] { 60 }, 2),
+            new Item("Hamburger", "Ready to satisfy any one's hunger.", false, 1.25f, new int[] { 1 }, new int[] { 60 }, 2),
         };
 
         /// <summary>
@@ -358,6 +359,9 @@ namespace Eclipse
                             }
                         }
                     }
+                }else if (useMode[i] == 4)
+                {
+                    Properties.Settings.Default.craftLevel++;
                 }
             }
         }

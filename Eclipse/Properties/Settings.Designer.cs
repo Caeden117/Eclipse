@@ -418,5 +418,17 @@ namespace Eclipse.Properties {
                 this["notStable"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int indentifier {
+            get {
+                return ((int)(this["indentifier"]));
+            }
+            set {
+                this["indentifier"] = value;
+            }
+        }
     }
 }
