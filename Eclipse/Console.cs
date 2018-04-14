@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 /*
@@ -68,6 +64,23 @@ namespace Eclipse
             health.Text = "HP: " + Properties.Settings.Default.HP + "/" + Properties.Settings.Default.HPMax;
             name.Text = Properties.Settings.Default.Name;
             clan.Text = Properties.Settings.Default.Clan;
+
+            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("Eclipse\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+            if (Directory.Exists(folder))
+            {
+                if (Directory.EnumerateFiles(folder).Count() > 0)
+                {
+                    guildHub.Enabled = true;
+                }
+                else
+                {
+                    guildHub.Enabled = false;
+                }
+            }
+            else
+            {
+                guildHub.Enabled = false;
+            }
 
             if (name.Right >= mainConsole.Left) //Rescaling labels so they are not conflicting with other objects.
             {
@@ -845,6 +858,42 @@ namespace Eclipse
                     }
                 }
             }
+            if (rng.Next(0, 100) >= 98)
+            {
+                if (MessageBox.Show("You have encountered a lone survivor!" + newSection() + "This person seems friendly, maybe you could persuade them to join. Would you like to persuade them?", "Eclipse - Persuade Member?", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    int die = roll(20);
+                    if (die >= 18)
+                    {
+                        mainConsole.AppendText(newSection() + "Congratulations! You have persuaded someone to join your guild.");
+                        Properties.Settings.Default.XP += rng.Next(200, 275);
+                        string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("Eclipse\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+                        Member member = new Member();
+                        using (StreamWriter fs = new StreamWriter(File.Create(Path.Combine(folder, member.name + ".ecm"))))
+                        {
+                            fs.WriteLine(member.name);
+                            fs.WriteLine(member.armor);
+                            fs.WriteLine(member.healthMax);
+                            fs.WriteLine(member.health);
+                            fs.WriteLine(member.strength);
+                            fs.WriteLine(member.dexterity);
+                            fs.WriteLine(member.agility);
+                            fs.WriteLine(member.constitution);
+                            fs.WriteLine(member.level);
+                        }
+                    }else if (die <= 2)
+                    {
+                        mainConsole.AppendText(newSection() + "You've made the survivor angry, who then attacks you.");
+                        huntLoop.Enabled = true;
+                        isPaused = true;
+                        mob = new Mob(Properties.Settings.Default.Level);
+                    }
+                    else
+                    {
+                        mainConsole.AppendText(newSection() + "The survivor kindly rejects your offer.");
+                    }
+                }
+            }
         }
 
         private void rest_Click(object sender, EventArgs e)
@@ -954,9 +1003,18 @@ namespace Eclipse
                     }
                     if (!hasIdentifier)
                     {
-                        Properties.Settings.Default.indentifier = rng.Next(0, Int32.MaxValue);
-                        if (MessageBox.Show("The save file you have provided lacks an identifier, and as such Eclipse has generated one for you. Would you like to save the game to keep this identifier? Identifiers are used to load guild members and other functions.", "Eclipse - Save Game?", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                        Properties.Settings.Default.identifier = rng.Next(0, Int32.MaxValue);
+                        if (MessageBox.Show("The save file you have provided lacks an identifier, and as such Eclipse has generated one for you. Would you like to save the game to keep this identifier? Identifiers are used to load guild members and other functions.", "Eclipse - Save Game?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                             saveGame();
+                        Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("Eclipse\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier)));
+                    }
+                    else
+                    {
+                        string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("Eclipse\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+                        if (!Directory.Exists(folder))
+                        {
+                            Directory.CreateDirectory(folder);
+                        }
                     }
                     mainConsole.AppendText(System.Environment.NewLine + "Game loaded successfully!" + newSection());
                     return true;

@@ -101,7 +101,7 @@
     <Setting Name="notStable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="indentifier" Type="System.Int32" Scope="User">
+    <Setting Name="identifier" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

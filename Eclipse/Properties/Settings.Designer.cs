@@ -422,12 +422,12 @@ namespace Eclipse.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int indentifier {
+        public int identifier {
             get {
-                return ((int)(this["indentifier"]));
+                return ((int)(this["identifier"]));
             }
             set {
-                this["indentifier"] = value;
+                this["identifier"] = value;
             }
         }
     }

@@ -81,6 +81,7 @@
             this.mainMenu = new System.Windows.Forms.Button();
             this.settings = new System.Windows.Forms.Button();
             this.notStableTick = new System.Windows.Forms.Timer(this.components);
+            this.guildHub = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // name
@@ -556,11 +557,21 @@
             this.notStableTick.Interval = 1000;
             this.notStableTick.Tick += new System.EventHandler(this.notStableTick_Tick);
             // 
+            // guildHub
+            // 
+            this.guildHub.Location = new System.Drawing.Point(571, 409);
+            this.guildHub.Name = "guildHub";
+            this.guildHub.Size = new System.Drawing.Size(88, 25);
+            this.guildHub.TabIndex = 44;
+            this.guildHub.Text = "🏠 Guild";
+            this.guildHub.UseVisualStyleBackColor = true;
+            // 
             // Console
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(955, 560);
+            this.Controls.Add(this.guildHub);
             this.Controls.Add(this.settings);
             this.Controls.Add(this.mainMenu);
             this.Controls.Add(this.exitButton);
@@ -668,5 +679,6 @@
         private System.Windows.Forms.Button mainMenu;
         private System.Windows.Forms.Button settings;
         private System.Windows.Forms.Timer notStableTick;
+        private System.Windows.Forms.Button guildHub;
     }
 }

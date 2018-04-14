@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Eclipse
@@ -55,6 +49,7 @@ namespace Eclipse
                 }
 
                 richTextBox1.AppendText(System.Environment.NewLine + "Generating character...");
+                Properties.Settings.Default.identifier = rng.Next(0, Int32.MaxValue);
                 Properties.Settings.Default.Name = textBox1.Text;
                 Properties.Settings.Default.Clan = textBox2.Text;
                 Properties.Settings.Default.HP = 20;
@@ -67,6 +62,11 @@ namespace Eclipse
                 Properties.Settings.Default.Endurance = rng.Next(5, 20);
                 Properties.Settings.Default.Agility = rng.Next(5, 20);
                 Properties.Settings.Default.Intelligence = rng.Next(5, 20);
+                string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("Eclipse\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+                if (!Directory.Exists(folder))
+                {
+                    Directory.CreateDirectory(folder);
+                }
                 Console console = new Console();
                 console.Show();
                 Close();

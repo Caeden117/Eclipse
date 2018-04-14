@@ -1,16 +1,11 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Eclipse
 {
     class Characters
     {
         public Random rng = new Random();
+        public Member[] guildMembers = new Member[] { };
         public static string[] nameCombinations = {
             "Jesse",
             "Daniel",
@@ -67,6 +62,18 @@ namespace Eclipse
             health = (level) + ((constitution - 10) / 2);
             healthMax = health;
             armor = level + ((strength - 10) / 2);
+        }
+        public Member(string a, int b, int c, int d, int e, int f, int g, int h, int i)
+        {
+            level = i;
+            name = a;
+            strength = e;
+            dexterity = f;
+            agility = g;
+            constitution = h;
+            health = d;
+            healthMax = c;
+            armor = b;
         }
     }
 
