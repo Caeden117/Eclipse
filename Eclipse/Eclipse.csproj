@@ -91,6 +91,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="GuildInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GuildInfo.Designer.cs">
+      <DependentUpon>GuildInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Items.cs" />
     <Compile Include="LevelUp.cs">
       <SubType>Form</SubType>
@@ -118,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GuildInfo.resx">
+      <DependentUpon>GuildInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LevelUp.resx">
       <DependentUpon>LevelUp.cs</DependentUpon>

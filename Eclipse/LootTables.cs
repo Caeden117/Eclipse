@@ -44,14 +44,14 @@
                 "Scrap Metal",
                 "Log",
                 "Rugged Wooden Sword",
-                "Sandwich",
+                "Basic Sandwich",
                 "Antibiotics"
             },
             {
                 "Silver Coin",
                 "Potion",
                 "Scrap Metal",
-                "Sandwich",
+                "Basic Sandwich",
                 "Wood Plank"
             },
             {

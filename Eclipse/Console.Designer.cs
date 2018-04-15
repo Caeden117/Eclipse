@@ -65,7 +65,6 @@
             this.craft = new System.Windows.Forms.ListBox();
             this.craftLabel = new System.Windows.Forms.Label();
             this.inventoryLabel = new System.Windows.Forms.Label();
-            this.craftButton = new System.Windows.Forms.Button();
             this.requires = new System.Windows.Forms.Label();
             this.itemRequires = new System.Windows.Forms.ListBox();
             this.craftItem = new System.Windows.Forms.Button();
@@ -419,16 +418,6 @@
             this.inventoryLabel.TabIndex = 32;
             this.inventoryLabel.Text = "Inventory";
             // 
-            // craftButton
-            // 
-            this.craftButton.Location = new System.Drawing.Point(665, 409);
-            this.craftButton.Name = "craftButton";
-            this.craftButton.Size = new System.Drawing.Size(88, 25);
-            this.craftButton.TabIndex = 33;
-            this.craftButton.Text = "Craft";
-            this.craftButton.UseVisualStyleBackColor = true;
-            this.craftButton.Click += new System.EventHandler(this.craftButton_Click);
-            // 
             // requires
             // 
             this.requires.AutoSize = true;
@@ -559,18 +548,19 @@
             // 
             // guildHub
             // 
-            this.guildHub.Location = new System.Drawing.Point(571, 409);
+            this.guildHub.Location = new System.Drawing.Point(243, 467);
             this.guildHub.Name = "guildHub";
             this.guildHub.Size = new System.Drawing.Size(88, 25);
             this.guildHub.TabIndex = 44;
-            this.guildHub.Text = "🏠 Guild";
+            this.guildHub.Text = "🏠 Guild Info";
             this.guildHub.UseVisualStyleBackColor = true;
+            this.guildHub.Click += new System.EventHandler(this.guildHub_Click);
             // 
             // Console
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(955, 560);
+            this.ClientSize = new System.Drawing.Size(1180, 560);
             this.Controls.Add(this.guildHub);
             this.Controls.Add(this.settings);
             this.Controls.Add(this.mainMenu);
@@ -582,7 +572,6 @@
             this.Controls.Add(this.craftItem);
             this.Controls.Add(this.itemRequires);
             this.Controls.Add(this.requires);
-            this.Controls.Add(this.craftButton);
             this.Controls.Add(this.inventoryLabel);
             this.Controls.Add(this.craftLabel);
             this.Controls.Add(this.craft);
@@ -663,7 +652,6 @@
         public System.Windows.Forms.ListBox craft;
         private System.Windows.Forms.Label craftLabel;
         private System.Windows.Forms.Label inventoryLabel;
-        private System.Windows.Forms.Button craftButton;
         private System.Windows.Forms.Label requires;
         public System.Windows.Forms.ListBox itemRequires;
         private System.Windows.Forms.Button craftItem;

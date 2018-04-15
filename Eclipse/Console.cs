@@ -32,6 +32,7 @@ namespace Eclipse
         Item fist;
         Mob mob;
         Button[] pausedControls = new Button[] {};
+        Button[] guildControls = new Button[] {};
         float weight2 = 0;
         public bool isPaused = false;
         public Console()
@@ -43,7 +44,8 @@ namespace Eclipse
         private void Console_Load(object sender, EventArgs e)
         {
             pausedControls = new Button[] { hunt, scavange, rest, };
-            
+            guildControls = new Button[] { guildHub };
+
             if (Properties.Settings.Default.tutorialList.IndexOf("S") == -1 && Properties.Settings.Default.tutorial)
             {
                 Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "S";
@@ -65,21 +67,24 @@ namespace Eclipse
             name.Text = Properties.Settings.Default.Name;
             clan.Text = Properties.Settings.Default.Clan;
 
-            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("Eclipse\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
             if (Directory.Exists(folder))
             {
                 if (Directory.EnumerateFiles(folder).Count() > 0)
                 {
-                    guildHub.Enabled = true;
+                    foreach (Button button in guildControls)
+                        button.Enabled = true;
                 }
                 else
                 {
-                    guildHub.Enabled = false;
+                    foreach (Button button in guildControls)
+                        button.Enabled = false;
                 }
             }
             else
             {
-                guildHub.Enabled = false;
+                foreach (Button button in guildControls)
+                    button.Enabled = false;
             }
 
             if (name.Right >= mainConsole.Left) //Rescaling labels so they are not conflicting with other objects.
@@ -106,7 +111,7 @@ namespace Eclipse
                 Properties.Settings.Default.itemInQueue = "";
             }
 
-            if (Properties.Settings.Default.godMode)
+            if (Properties.Settings.Default.godMode) //God mode effects
             {
                 Properties.Settings.Default.HP = Properties.Settings.Default.HPMax + Properties.Settings.Default.HPOverflowMax;
                 Properties.Settings.Default.Hunger = 100;
@@ -269,12 +274,12 @@ namespace Eclipse
                     if (!craft.Items.Contains(recipe.result))
                     {
                         craft.Items.Add(recipe.result);
-                        if ((recipe.result == "Workbench" && Properties.Settings.Default.craftLevel > 0) || (recipe.result == "Forge" && Properties.Settings.Default.craftLevel > 1) || (inventory.Items.Contains(recipe.result) && itemList.find(recipe.result).durability > 0))
+                        if ((recipe.result == "Workbench" && Properties.Settings.Default.craftLevel > 0) || (recipe.result == "Forge" && Properties.Settings.Default.craftLevel > 1) || (recipe.result == "Fire" && Properties.Settings.Default.craftLevel > 1) || (inventory.Items.Contains(recipe.result) && itemList.find(recipe.result).durability > 0))
                         {
                             craft.Items.Remove(recipe.result);
                         }
                     }
-                    else if ((recipe.result == "Workbench" && Properties.Settings.Default.craftLevel > 0) || (recipe.result == "Forge" && Properties.Settings.Default.craftLevel > 1) || (inventory.Items.Contains(recipe.result) && itemList.find(recipe.result).durability > 0))
+                    else if ((recipe.result == "Workbench" && Properties.Settings.Default.craftLevel > 0) || (recipe.result == "Forge" && Properties.Settings.Default.craftLevel > 1) || (recipe.result == "Fire" && Properties.Settings.Default.craftLevel > 1) || (inventory.Items.Contains(recipe.result) && itemList.find(recipe.result).durability > 0))
                     {
                         craft.Items.Remove(recipe.result);
                     }
@@ -317,15 +322,6 @@ namespace Eclipse
                 {
                     button.Enabled = !isPaused;
                 }
-            }
-
-            if (Size.Width == 975)
-            {
-                craftButton.Text = "Craft >>>";
-            }
-            else
-            {
-                craftButton.Text = "<<< Craft";
             }
 
             inventory.Sorted = Properties.Settings.Default.sortItems;
@@ -706,18 +702,6 @@ namespace Eclipse
             }
         }
 
-        private void craftButton_Click(object sender, EventArgs e)
-        {
-            if (Size.Width == 975)
-            {
-                Size = new Size(1200, Size.Height);
-            }
-            else
-            {
-                Size = new Size(975, Size.Height);
-            }
-        }
-
         private void craft_SelectedIndexChanged(object sender, EventArgs e)
         {
             itemRequires.Items.Clear();
@@ -858,7 +842,7 @@ namespace Eclipse
                     }
                 }
             }
-            if (rng.Next(0, 100) >= 98)
+            if (rng.Next(0, 10) >= 0)
             {
                 if (MessageBox.Show("You have encountered a lone survivor!" + newSection() + "This person seems friendly, maybe you could persuade them to join. Would you like to persuade them?", "Eclipse - Persuade Member?", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
@@ -867,8 +851,8 @@ namespace Eclipse
                     {
                         mainConsole.AppendText(newSection() + "Congratulations! You have persuaded someone to join your guild.");
                         Properties.Settings.Default.XP += rng.Next(200, 275);
-                        string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("Eclipse\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
-                        Member member = new Member();
+                        string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+                        Member member = new Characters().newMember();
                         using (StreamWriter fs = new StreamWriter(File.Create(Path.Combine(folder, member.name + ".ecm"))))
                         {
                             fs.WriteLine(member.name);
@@ -886,7 +870,7 @@ namespace Eclipse
                         mainConsole.AppendText(newSection() + "You've made the survivor angry, who then attacks you.");
                         huntLoop.Enabled = true;
                         isPaused = true;
-                        mob = new Mob(Properties.Settings.Default.Level);
+                        mob = new Mob(Properties.Settings.Default.Level, true);
                     }
                     else
                     {
@@ -1006,11 +990,11 @@ namespace Eclipse
                         Properties.Settings.Default.identifier = rng.Next(0, Int32.MaxValue);
                         if (MessageBox.Show("The save file you have provided lacks an identifier, and as such Eclipse has generated one for you. Would you like to save the game to keep this identifier? Identifiers are used to load guild members and other functions.", "Eclipse - Save Game?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                             saveGame();
-                        Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("Eclipse\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier)));
+                        Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier)));
                     }
                     else
                     {
-                        string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("Eclipse\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+                        string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
                         if (!Directory.Exists(folder))
                         {
                             Directory.CreateDirectory(folder);
@@ -1132,6 +1116,11 @@ namespace Eclipse
                 isPaused = false;
                 Hide();
             }
+        }
+
+        private void guildHub_Click(object sender, EventArgs e)
+        {
+            new GuildInfo().Show();
         }
     }
 }

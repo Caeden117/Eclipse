@@ -55,10 +55,10 @@ namespace Eclipse
             Random rng = new Random();
             level = rng.Next(1, 5);
             name = memberName;
-            strength = rng.Next(1 * Convert.ToInt32(Math.Round((decimal)level / 2)), 5 * level);
-            dexterity = rng.Next(1 * Convert.ToInt32(Math.Round((decimal)level / 2)), 5 * level);
-            agility = rng.Next(1 * Convert.ToInt32(Math.Round((decimal)level / 2)), 5 * level);
-            constitution = rng.Next(1 * Convert.ToInt32(Math.Round((decimal)level / 2)), 5 * level);
+            strength = rng.Next(5, 20);
+            dexterity = rng.Next(5, 20);
+            agility = rng.Next(5, 20);
+            constitution = rng.Next(5, 20);
             health = (level) + ((constitution - 10) / 2);
             healthMax = health;
             armor = level + ((strength - 10) / 2);
@@ -97,9 +97,22 @@ namespace Eclipse
             agility = rng.Next(0, 20);
             constitution = rng.Next(0, 20);
             health = (playerLevel) + ((constitution - 10) / 2);
-            armor = playerLevel + ((strength - 10) / 2);
+            armor = 10 + ((strength - 10) / 2) + ((dexterity - 10) / 2);
             level = playerLevel;
             name = nameCombinations[rng.Next(0, nameCombinations.Length)];
+        }
+        public Mob(int playerLevel, bool isSurvivor)
+        {
+            Random rng = new Random();
+            nameCombinations = new string[] { "Zombie", "Skeleton", "Undead", "Lone Survivor" };
+            strength = rng.Next(0, 20);
+            dexterity = rng.Next(0, 20);
+            agility = rng.Next(0, 20);
+            constitution = rng.Next(0, 20);
+            health = (playerLevel) + ((constitution - 10) / 2);
+            armor = 10 + ((strength - 10) / 2) + ((dexterity - 10) / 2);
+            level = playerLevel;
+            name = isSurvivor ? "Angry Survivor" : nameCombinations[rng.Next(0, nameCombinations.Length)];
         }
     }
 }
