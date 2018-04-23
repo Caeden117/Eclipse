@@ -864,6 +864,7 @@ namespace Eclipse
                             fs.WriteLine(member.agility);
                             fs.WriteLine(member.constitution);
                             fs.WriteLine(member.level);
+                            fs.WriteLine(0);
                         }
                     }else if (die <= 2)
                     {
@@ -1121,6 +1122,25 @@ namespace Eclipse
         private void guildHub_Click(object sender, EventArgs e)
         {
             new GuildInfo().Show();
+        }
+
+        public string[] getInventoryItems()
+        {
+            return inventory.Items.Cast<string>().ToArray();
+        }
+
+        public string[] getHealingItems()
+        {
+            string[] items = getInventoryItems();
+            List<string> consumables = new List<string>();
+            foreach(string item in items)
+            {
+                if (itemList.find(item).useMode[0] == 1)
+                {
+                    consumables.Add(item);
+                }
+            }
+            return consumables.ToArray();
         }
     }
 }

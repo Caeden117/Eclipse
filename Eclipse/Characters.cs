@@ -59,8 +59,7 @@ namespace Eclipse
             dexterity = rng.Next(5, 20);
             agility = rng.Next(5, 20);
             constitution = rng.Next(5, 20);
-            health = (level) + ((constitution - 10) / 2);
-            healthMax = health;
+            healthMax = health = 15;
             armor = level + ((strength - 10) / 2);
         }
         public Member(string a, int b, int c, int d, int e, int f, int g, int h, int i)

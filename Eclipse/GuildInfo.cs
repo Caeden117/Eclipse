@@ -11,6 +11,8 @@ namespace Eclipse
     public partial class GuildInfo : Form
     {
         public int guildSize;
+        public string[] disposition = new string[] { "Rebellious", "Hatred", "Distaste", "Neutral", "Friendly", "Faithful", "Loyal" };
+        public Color[] dispositionColors = new Color[] { Color.DarkRed, Color.Red, Color.OrangeRed, Color.Black, Color.LightGreen, Color.Lime, Color.DarkGreen};
         public GuildInfo()
         {
             string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
@@ -32,6 +34,20 @@ namespace Eclipse
             {
                 memberList.Items.Add(file.Split('\\').Last().Split('.').First());
             }
+        }
+
+        private void memberList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+            string[] file = File.ReadAllLines(Path.Combine(folder, memberList.SelectedItem + ".ecm"));
+            memberHealth.Text = string.Format("Health: {0}/{1}", file[3], file[2]);
+            Strength.Text = string.Format("Strength: {0}", file[4]);
+            Dexterity.Text = string.Format("Dexterity: {0}", file[5]);
+            Agility.Text = string.Format("Agility: {0}", file[6]);
+            Constitution.Text = string.Format("Constitution: {0}", file[7]);
+            Disposition.Text = string.Format("Dispostion: {0} ({1})", disposition[Convert.ToInt32(Math.Floor((decimal.Parse(file[9]) / 5) + 3))], file[9]);
+            Disposition.ForeColor = dispositionColors[Convert.ToInt32(Math.Floor((decimal.Parse(file[9]) / 5) + 3))];
+            Level.Text = string.Format("Level: {0}", file[8]);
         }
     }
 }
