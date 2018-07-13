@@ -81,7 +81,7 @@
             this.settings = new System.Windows.Forms.Button();
             this.notStableTick = new System.Windows.Forms.Timer(this.components);
             this.guildHub = new System.Windows.Forms.Button();
-            this.achivements = new System.Windows.Forms.Button();
+            this.achievements = new System.Windows.Forms.Button();
             this.storage = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -558,15 +558,15 @@
             this.guildHub.UseVisualStyleBackColor = true;
             this.guildHub.Click += new System.EventHandler(this.guildHub_Click);
             // 
-            // achivements
+            // achievements
             // 
-            this.achivements.Location = new System.Drawing.Point(665, 467);
-            this.achivements.Name = "achivements";
-            this.achivements.Size = new System.Drawing.Size(88, 25);
-            this.achivements.TabIndex = 45;
-            this.achivements.Text = "Achievements";
-            this.achivements.UseVisualStyleBackColor = true;
-            this.achivements.Click += new System.EventHandler(this.achivements_Click);
+            this.achievements.Location = new System.Drawing.Point(665, 467);
+            this.achievements.Name = "achievements";
+            this.achievements.Size = new System.Drawing.Size(88, 25);
+            this.achievements.TabIndex = 45;
+            this.achievements.Text = "Achievements";
+            this.achievements.UseVisualStyleBackColor = true;
+            this.achievements.Click += new System.EventHandler(this.achivements_Click);
             // 
             // storage
             // 
@@ -583,7 +583,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1180, 560);
             this.Controls.Add(this.storage);
-            this.Controls.Add(this.achivements);
+            this.Controls.Add(this.achievements);
             this.Controls.Add(this.guildHub);
             this.Controls.Add(this.settings);
             this.Controls.Add(this.mainMenu);
@@ -691,7 +691,7 @@
         private System.Windows.Forms.Button settings;
         private System.Windows.Forms.Timer notStableTick;
         private System.Windows.Forms.Button guildHub;
-        private System.Windows.Forms.Button achivements;
+        private System.Windows.Forms.Button achievements;
         private System.Windows.Forms.Button storage;
     }
 }

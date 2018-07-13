@@ -16,6 +16,11 @@ namespace Eclipse
             return listOfAchievements[masterEncoder.IndexOf(x)];
         }
 
+        public static Achievement fromName(string x)
+        {
+            return listOfAchievements.Where(g => g.name == x).First();
+        }
+
         public static bool giveAchievement(string name, bool isItem, Achievement.AchievementType type)
         {
             return giveAchievement(name, isItem, type, out Achievement achievement);
@@ -69,11 +74,11 @@ namespace Eclipse
         public static Achievement[] listOfAchievements = new Achievement[]
         {
             new Achievement("Eclipse", "Welcome to Eclipse.", Achievement.AchievementType.Other),
-            new Achievement("The Best Weapon", "That'll teach 'em.", Achievement.AchievementType.Use, "Stick"),
+            new Achievement("The Best Weapon", "That'll teach 'em. (Equip a Stick)", Achievement.AchievementType.Use, "Stick"),
             new Achievement("Simple Work Space", "Light a fire.", Achievement.AchievementType.Craft, "Fire"),
             new Achievement("Rough Around The Edges", "A basic sword will do for now.", Achievement.AchievementType.Craft, "Rugged Wooden Sword"),
             new Achievement("Solid Work Space", "Make yourself a Workbench.", Achievement.AchievementType.Craft, "Workbench"),
-            new Achievement("Revolutionary", "A step up from wood.", Achievement.AchievementType.ReceiveItem, "Scrap Metal"),
+            new Achievement("Revolutionary", "A step up from wood. (Get some Scrap Metal)", Achievement.AchievementType.ReceiveItem, "Scrap Metal"),
             new Achievement("Flimsy Start", "It'll take time to get used to Metal.", Achievement.AchievementType.Craft, "Flimsy Metal Sword"),
             new Achievement("Sturdy Finish", "Reinforce your flimsy metal sword.", Achievement.AchievementType.Craft, "Sturdy Metal Sword"),
             new Achievement("Professional Work Space", "Create a real man's workshop.", Achievement.AchievementType.Craft, "Forge"),
@@ -82,7 +87,7 @@ namespace Eclipse
             new Achievement("Overdose", "Heal more than your health maximum.", Achievement.AchievementType.Other),
             new Achievement("Close One", "Recover from being Infected.", Achievement.AchievementType.Other),
             new Achievement("Near Death Experience", "Recover from being Infected with 90 or greater Infection.", Achievement.AchievementType.Other),
-            new Achievement("Holy Water", "Use a Mythical Potion to restart yourself.", Achievement.AchievementType.Use, "Mythical Potion"),
+            new Achievement("Press F5 to Refresh", "Use a Mythical Potion to refresh yourself.", Achievement.AchievementType.Use, "Mythical Potion"),
             new Achievement("Desperate Circumstances", "Eat Rotten Meat.", Achievement.AchievementType.Use, "Rotten Meat"),
             new Achievement("Vegetarian", "Create and eat a Salad.", Achievement.AchievementType.Use, "Salad"),
             new Achievement("Carnivore", "Create and eat a Hamburger.", Achievement.AchievementType.Use, "Hamburger"),
@@ -93,7 +98,7 @@ namespace Eclipse
             new Achievement("Bill Gates", "Somehow compress your gold pouches into a gold bar.", Achievement.AchievementType.Craft, "Gold Bar"),
             new Achievement("Showoff", "Create a sword out of your wealth.", Achievement.AchievementType.Craft, "Golden Sword"),
             new Achievement("Postmortem", "Have a Totem save your life.", Achievement.AchievementType.Other),
-            new Achievement("Red Handed", "I hope you know what you've done.", Achievement.AchievementType.Other),
+            new Achievement("Red Handed", "I hope you know what you've done. (Cheat in an Item)", Achievement.AchievementType.Other),
             new Achievement("More Than You Can Chew", "Carry more than what you can handle.", Achievement.AchievementType.Other),
             new Achievement("A Special Friend", "Recruit a survivor into your guild.", Achievement.AchievementType.Other),
             new Achievement("Company", "Recruit 5 people into your guild.", Achievement.AchievementType.Other),

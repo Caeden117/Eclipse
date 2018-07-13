@@ -1239,10 +1239,7 @@ namespace Eclipse
 
         private void achivements_Click(object sender, EventArgs e)
         {
-            foreach(char x in Properties.Settings.Default.achievementList)
-            {
-                mainConsole.AppendText(Environment.NewLine + Achievements.decodeAchievement(x).name + " | " + Achievements.decodeAchievement(x).description);
-            }
+            new AchievementList().Show();
         }
     }
 }

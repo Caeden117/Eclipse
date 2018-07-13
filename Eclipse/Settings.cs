@@ -50,6 +50,7 @@ namespace Eclipse
             else
             {
                 Properties.Settings.Default.itemInQueue = textBox1.Text;
+                Achievements.giveAchievement("Red Handed", false, Achievement.AchievementType.Other, out Achievement achievement);
             }
             textBox1.Clear();
         }
