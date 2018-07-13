@@ -69,6 +69,27 @@ namespace Eclipse
         }
 
         /// <summary>
+        /// Returns a Member array of all members in the user's guild.
+        /// </summary>
+        public Member[] getAllMembers()
+        {
+            List<Member> memberList = new List<Member>();
+            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+            try
+            {
+                foreach (string fileName in Directory.EnumerateFiles(folder)) {
+                    string[] file = File.ReadAllLines(fileName);
+                    memberList.Add(new Member(file[0], int.Parse(file[1]), int.Parse(file[2]), int.Parse(file[3]), int.Parse(file[4]), int.Parse(file[5]), int.Parse(file[6]), int.Parse(file[7]), int.Parse(file[8]), int.Parse(file[9])));
+                }
+                return memberList.ToArray();
+            }
+            catch (Exception)
+            {
+                return new Member[] { };
+            }
+        }
+
+        /// <summary>
         /// Takes a Member struct and writes it to the disk as a .ecm file. Returns the file location as a string.
         /// WARNING: Automatically overwrites any preexisting file.
         /// </summary>

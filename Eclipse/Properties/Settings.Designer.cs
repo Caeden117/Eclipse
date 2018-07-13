@@ -430,5 +430,29 @@ namespace Eclipse.Properties {
                 this["identifier"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string achievementList {
+            get {
+                return ((string)(this["achievementList"]));
+            }
+            set {
+                this["achievementList"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int killCount {
+            get {
+                return ((int)(this["killCount"]));
+            }
+            set {
+                this["killCount"] = value;
+            }
+        }
     }
 }

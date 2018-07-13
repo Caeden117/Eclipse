@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Achivements.cs" />
     <Compile Include="CharacterCreation.cs">
       <SubType>Form</SubType>
     </Compile>

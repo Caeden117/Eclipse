@@ -50,6 +50,7 @@ namespace Eclipse
             {
                 Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "S";
                 MessageBox.Show("Welcome to Eclipse! Throughout your game, these Tutorial messages will pop up. You can disable these in the Settings.", "Eclipse Tutorial - Welcome!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Achievements.giveAchievement("Eclipse", false, Achievement.AchievementType.Other);
             }
         }
 
@@ -175,9 +176,9 @@ namespace Eclipse
                 Properties.Settings.Default.HPOverflowMax = 100;
             if (Properties.Settings.Default.Infection >= 100 && !Properties.Settings.Default.notStable)
                 onDeath();
-            if (Properties.Settings.Default.notStable)
+            if (Properties.Settings.Default.notStable && !isPaused)
             {
-                if (!isPaused)
+                if (!isPaused && notStableTick.Enabled == false)
                 {
                     isPaused = true;
                     Properties.Settings.Default.Infection = 0;
@@ -230,6 +231,10 @@ namespace Eclipse
                     MessageBox.Show("You have exceeded your carrying capacity!" + newSection() + "While you are over capacity, any items you would obtain will automatically be discarded, and other effects!" + newSection() + "Increase carrying capacity by investing more into Strength.", "Eclipse Tutorial - Infection", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 Properties.Settings.Default.overweight = true;
+                if (Achievements.giveAchievement("More Than You Can Chew", false, Achievement.AchievementType.Other, out Achievement achievement))
+                {
+                    mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement.name + "!");
+                }
             }
             else
             {
@@ -247,6 +252,10 @@ namespace Eclipse
                 healthsmall.Visible = true;
                 healthoverflow.Visible = true;
                 healthbar.Visible = false;
+                if (Achievements.giveAchievement("Overdose", false, Achievement.AchievementType.Other, out Achievement achievement))
+                {
+                    mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement.name + "!");
+                }
             }
             else
             {
@@ -316,6 +325,24 @@ namespace Eclipse
                     {
                         if (scavange.Enabled == true)
                             scavange.Enabled = false;
+                    }
+                }
+                else if (button == hunt)
+                {
+                    if (isPaused)
+                    {
+                        if (Properties.Settings.Default.notStable)
+                        {
+                            hunt.Enabled = true;
+                        }
+                        else
+                        {
+                            hunt.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        hunt.Enabled = true;
                     }
                 }
                 else
@@ -528,8 +555,19 @@ namespace Eclipse
 
         private void use_Click(object sender, EventArgs e)
         {
+            if (Achievements.giveAchievement(inventory.SelectedItem.ToString(), true, Achievement.AchievementType.Use, out Achievement achievement))
+            {
+                mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement.name + "!");
+            }
             if (itemList.find(inventory.SelectedItem.ToString()).useMode[0] != 3)
             {
+                if (itemList.find(inventory.SelectedItem.ToString()).useMode[0] == 0 && Properties.Settings.Default.HP <= 5)
+                {
+                    if (Achievements.giveAchievement("I Need Healing", false, Achievement.AchievementType.Other, out Achievement achievement2))
+                    {
+                        mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement2.name + "!");
+                    }
+                }
                 itemList.find(inventory.SelectedItem.ToString()).onUse();
                 inventory.Items.RemoveAt(inventory.SelectedIndex);
             }
@@ -547,6 +585,7 @@ namespace Eclipse
                 }
                 weapon.ForeColor = Color.FromName(Items.rarityColors[itemList.find(Properties.Settings.Default.weapon).rarityLevel]);
             }
+            
         }
 
         private void throwItem_Click(object sender, EventArgs e)
@@ -605,7 +644,14 @@ namespace Eclipse
                     damage = 1;
                 }
                 mainConsole.AppendText(System.Environment.NewLine + "Failure! You hit yourself for " + damage + " damage!");
-                Properties.Settings.Default.HP -= damage;
+                if (Properties.Settings.Default.notStable)
+                {
+                    Properties.Settings.Default.Infection += damage;
+                }
+                else
+                {
+                    Properties.Settings.Default.HP -= damage;
+                }
                 damageWeapon();
             }
             else
@@ -637,7 +683,14 @@ namespace Eclipse
                 }
                 damage *= 2;
                 mainConsole.AppendText(System.Environment.NewLine + "Critical hit! It hits for " + damage + " damage!");
-                Properties.Settings.Default.HP -= damage;
+                if (Properties.Settings.Default.notStable)
+                {
+                    Properties.Settings.Default.Infection += damage;
+                }
+                else
+                {
+                    Properties.Settings.Default.HP -= damage;
+                }
                 mainConsole.AppendText(System.Environment.NewLine + "You begin to feel sickness flowing through you...");
                 Properties.Settings.Default.Infection += rng.Next(0, 15) - getModifier(Properties.Settings.Default.Constitution);
             }
@@ -661,7 +714,14 @@ namespace Eclipse
                         damage = 0;
                     }
                     mainConsole.AppendText(System.Environment.NewLine + "It hits for " + damage + " damage!");
-                    Properties.Settings.Default.HP -= damage;
+                    if (Properties.Settings.Default.notStable)
+                    {
+                        Properties.Settings.Default.Infection += damage;
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.HP -= damage;
+                    }
                     if (rng.Next(0, 10) == 10)
                     {
                         mainConsole.AppendText(System.Environment.NewLine + "You begin to feel sickness flowing through you...");
@@ -682,12 +742,20 @@ namespace Eclipse
             }
             if (mob.health <= 0)
             {
+                int[] killCount = new int[] { 10, 50, 125, 500, 1000 };
+                string[] killCountNames = new string[] { "Novice", "Apprentice", "Initiate", "Master", "Legend" };
                 mainConsole.AppendText(System.Environment.NewLine + "You have killed the mob!" + newSection());
                 //int tableLevel = Convert.ToInt32(Math.Floor(Convert.ToDecimal(Properties.Settings.Default.Level / 10)));
-                int xpGain = rng.Next(10, 25) * (itemList.find(Properties.Settings.Default.weapon).rarityLevel * 2);
+                int xpGain = rng.Next(10, 25) * ((itemList.find(Properties.Settings.Default.weapon).rarityLevel + 1) * 2);
                 Properties.Settings.Default.XP += xpGain;
+                Properties.Settings.Default.killCount++;
                 mainConsole.AppendText(System.Environment.NewLine + "You have recieved: " + xpGain + " XP.");
                 Item loot = itemList.find(lootTables.mobLootTable[rng.Next(0, lootTables.mobLootTable.Length)]);
+                if (killCount.ToList().IndexOf(Properties.Settings.Default.killCount) > 0)
+                {
+                    if (Achievements.giveAchievement(killCountNames[killCount.ToList().IndexOf(Properties.Settings.Default.killCount)], false, Achievement.AchievementType.Other, out Achievement achievement))
+                        mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement.name + "!");
+                }
                 if (weight2 >= Properties.Settings.Default.carryingCap)
                 {
                     mainConsole.AppendText(System.Environment.NewLine + "You would've recieved " + loot.name + ", but you can't carry any more!");
@@ -696,6 +764,7 @@ namespace Eclipse
                 {
                     inventory.Items.Add(loot.name);
                     mainConsole.AppendText(System.Environment.NewLine + "You have picked up: " + loot.name);
+                    
                 }
                 huntLoop.Enabled = false;
                 isPaused = false;
@@ -792,6 +861,11 @@ namespace Eclipse
                         inventory.Items.Remove(item);
                     }
                 }
+
+                if (Achievements.giveAchievement(itemResult, true, Achievement.AchievementType.Craft, out Achievement achievement))
+                {
+                    mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement.name + "!");
+                }
             }
         }
 
@@ -833,6 +907,8 @@ namespace Eclipse
                             {
                                 inventory.Items.Add(loot.name);
                                 mainConsole.AppendText(System.Environment.NewLine + "You have picked up: " + loot.name);
+                                if (Achievements.giveAchievement(loot.name, true, Achievement.AchievementType.ReceiveItem, out Achievement achievement))
+                                    mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement.name + "!");
                             }
                         }
                     }
@@ -866,12 +942,21 @@ namespace Eclipse
                             fs.WriteLine(member.level);
                             fs.WriteLine(0);
                         }
-                    }else if (die <= 2)
+                        if (Achievements.giveAchievement("A Special Friend", false, Achievement.AchievementType.Other, out Achievement achievement))
+                        {
+                            mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement.name + "!");
+                        }
+                    }
+                    else if (die <= 2)
                     {
                         mainConsole.AppendText(newSection() + "You've made the survivor angry, who then attacks you.");
                         huntLoop.Enabled = true;
                         isPaused = true;
                         mob = new Mob(Properties.Settings.Default.Level, true);
+                        if (Achievements.giveAchievement("Bad Negotiator", false, Achievement.AchievementType.Other, out Achievement achievement))
+                        {
+                            mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement.name + "!");
+                        }
                     }
                     else
                     {
@@ -989,7 +1074,7 @@ namespace Eclipse
                     if (!hasIdentifier)
                     {
                         Properties.Settings.Default.identifier = rng.Next(0, Int32.MaxValue);
-                        if (MessageBox.Show("The save file you have provided lacks an identifier, and as such Eclipse has generated one for you. Would you like to save the game to keep this identifier? Identifiers are used to load guild members and other functions.", "Eclipse - Save Game?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                        if (MessageBox.Show("The save file you have provided lacks an identifier, and as such Eclipse has generated one for you. Would you like to save the game to keep this identifier? Identifiers are used to load guild members and other functions while allowing you to use the same name.", "Eclipse - Save Game?", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                             saveGame();
                         Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier)));
                     }
@@ -1088,11 +1173,18 @@ namespace Eclipse
             }
             else
             {
+                if (Properties.Settings.Default.Infection >= 90)
+                {
+                    if (Achievements.giveAchievement("Near Death Experience", false, Achievement.AchievementType.Other, out Achievement achievement2))
+                        mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement2.name + "!");
+                }
                 Properties.Settings.Default.Infection = 0;
                 notStableTick.Enabled = false;
                 isPaused = false;
                 Properties.Settings.Default.HP = 1;
                 mainConsole.AppendText(newSection() + "You are now stable. It's recommended to use healing items or get some rest!");
+                if (Achievements.giveAchievement("Close One", false, Achievement.AchievementType.Other, out Achievement achievement))
+                    mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement.name + "!");
             }
         }
 
@@ -1108,6 +1200,8 @@ namespace Eclipse
                 Properties.Settings.Default.Hunger = 100;
                 Properties.Settings.Default.Infection = 0;
                 mainConsole.AppendText(newSection() + "A bright glow accompanies your last breath as you soon become healthy again.");
+                if (Achievements.giveAchievement("Postmortem", false, Achievement.AchievementType.Other, out Achievement achievement))
+                    mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement.name + "!");
             }
             else
             {
@@ -1141,6 +1235,14 @@ namespace Eclipse
                 }
             }
             return consumables.ToArray();
+        }
+
+        private void achivements_Click(object sender, EventArgs e)
+        {
+            foreach(char x in Properties.Settings.Default.achievementList)
+            {
+                mainConsole.AppendText(Environment.NewLine + Achievements.decodeAchievement(x).name + " | " + Achievements.decodeAchievement(x).description);
+            }
         }
     }
 }
