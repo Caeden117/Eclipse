@@ -18,7 +18,11 @@ namespace Eclipse
             string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
             if (Directory.Exists(folder))
             {
-                guildSize = Directory.EnumerateFiles(folder).Count();
+                foreach (string file in Directory.EnumerateFiles(folder))
+                {
+                    if (file.Split('\\').Last().Split('.').Last() == "ecm") //If the file extension is .ecm
+                        guildSize++;
+                }
             }
             InitializeComponent();
         }
@@ -27,8 +31,10 @@ namespace Eclipse
         {
             clanName.Text = Properties.Settings.Default.Clan;
             population.Text = string.Format("Population: {0}/{1}", guildSize, Math.Floor((decimal)(Properties.Settings.Default.Level - 5) / 4));
-            if (guildSize > Math.Floor((decimal)(Properties.Settings.Default.Level - 5) / 4))
+            if (guildSize < Math.Floor((decimal)(Properties.Settings.Default.Level - 5) / 4))
                 populationBar.Value = Convert.ToInt32(populationBar.Maximum * (guildSize / Math.Floor((decimal)(Properties.Settings.Default.Level - 5) / 4)));
+            else
+                populationBar.Value = populationBar.Maximum;
             string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
             foreach (string file in Directory.EnumerateFiles(folder))
             {

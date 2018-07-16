@@ -575,7 +575,7 @@
             this.storage.Name = "storage";
             this.storage.Size = new System.Drawing.Size(88, 25);
             this.storage.TabIndex = 46;
-            this.storage.Text = "🏠 Storage";
+            this.storage.Text = "📮 Storage";
             this.storage.UseVisualStyleBackColor = true;
             this.storage.Click += new System.EventHandler(this.storage_Click);
             // 

@@ -14,12 +14,20 @@ namespace Eclipse
     public partial class MoveItem : Form
     {
         string itemToMove;
+        string previousStorageContainer = "";
         bool closedThroughButton = false;
 
         public MoveItem(string itemName)
         {
             InitializeComponent();
             itemToMove = itemName;
+        }
+
+        public MoveItem(string itemName, string storageContainer)
+        {
+            InitializeComponent();
+            itemToMove = itemName;
+            previousStorageContainer = storageContainer;
         }
 
         private void MoveItem_Load(object sender, EventArgs e)
@@ -80,7 +88,27 @@ namespace Eclipse
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.itemInQueue = itemToMove;
+            if (previousStorageContainer == "")
+            {
+                Properties.Settings.Default.itemInQueue = itemToMove;
+            }
+            else
+            {
+                List<string> existingItems = new List<string>();
+                string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+                foreach (string item in File.ReadAllLines(Path.Combine(folder, previousStorageContainer + ".ecst")))
+                {
+                    existingItems.Add(item);
+                }
+                existingItems.Add(itemToMove);
+                using (StreamWriter fs = new StreamWriter(File.Create(Path.Combine(folder, previousStorageContainer + ".ecst"))))
+                {
+                    foreach (string item in existingItems)
+                    {
+                        fs.WriteLine(item);
+                    }
+                }
+            }
             closedThroughButton = true;
             Close();
         }

@@ -31,15 +31,7 @@ namespace Eclipse
 
         private void existingStorage_SelectedIndexChanged(object sender, EventArgs e)
         {
-            float weight = 0;
-            float weightMax = new Items().find(existingStorage.SelectedItem.ToString().Split('#').First()).amount.First();
             refreshItems();
-            foreach(string item in storageItems.Items)
-            {
-                weight += new Items().find(item).weight;
-            }
-            weightText.Text = "Weight: " + weight + "/" + weightMax;
-            progressBar1.Value = Convert.ToInt32(progressBar1.Maximum * (weight / weightMax));
         }
 
         public void recompileStorage()
@@ -64,6 +56,14 @@ namespace Eclipse
             {
                 storageItems.Items.Add(item);
             }
+            float weight = 0;
+            float weightMax = new Items().find(existingStorage.SelectedItem.ToString().Split('#').First()).amount.First();
+            foreach (string item in storageItems.Items)
+            {
+                weight += new Items().find(item).weight;
+            }
+            weightText.Text = "Weight: " + weight + "/" + weightMax;
+            progressBar1.Value = Convert.ToInt32(progressBar1.Maximum * (weight / weightMax));
         }
 
         private void storageItems_SelectedIndexChanged(object sender, EventArgs e)
@@ -85,10 +85,15 @@ namespace Eclipse
         {
             if (MessageBox.Show("Are you sure you want to transfer this item?", "Eclipse - Transfer Item?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                new MoveItem(storageItems.SelectedItem.ToString()).Show();
+                new MoveItem(storageItems.SelectedItem.ToString(), existingStorage.SelectedItem.ToString()).Show();
                 storageItems.Items.Remove(storageItems.SelectedItem.ToString());
                 recompileStorage();
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            refreshItems();
         }
     }
 }

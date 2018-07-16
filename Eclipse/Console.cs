@@ -944,7 +944,7 @@ namespace Eclipse
                     }
                 }
             }
-            if (rng.Next(0, 10) >= 0)
+            if (rng.Next(0, 10) >= 9)
             {
                 if (MessageBox.Show("You have encountered a lone survivor!" + newSection() + "This person seems friendly, maybe you could persuade them to join. Would you like to persuade them?", "Eclipse - Persuade Member?", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
