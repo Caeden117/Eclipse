@@ -228,7 +228,7 @@ namespace Eclipse
                 if (Properties.Settings.Default.tutorialList.IndexOf("W") == -1 && Properties.Settings.Default.tutorial)
                 {
                     Properties.Settings.Default.tutorialList = Properties.Settings.Default.tutorialList + "W";
-                    MessageBox.Show("You have exceeded your carrying capacity!" + newSection() + "While you are over capacity, any items you would obtain will automatically be discarded, and other effects!" + newSection() + "Increase carrying capacity by investing more into Strength.", "Eclipse Tutorial - Infection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("You have exceeded your carrying capacity!" + newSection() + "While you are over capacity, any items you would obtain will automatically be discarded, and other effects!" + newSection() + "Increase carrying capacity by investing more into Strength. You can also craft items that support storing items!", "Eclipse Tutorial - Infection", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 Properties.Settings.Default.overweight = true;
                 if (Achievements.giveAchievement("More Than You Can Chew", false, Achievement.AchievementType.Other, out Achievement achievement))
@@ -507,6 +507,7 @@ namespace Eclipse
             if (inventory.SelectedIndex > -1)
             {
                 throwItem.Enabled = true;
+                moveItem.Enabled = true;
                 itemName.Text = itemList.find(inventory.SelectedItem.ToString()).name;
                 itemName.ForeColor = Color.FromName(Items.rarityColors[itemList.find(inventory.SelectedItem.ToString()).rarityLevel]);
                 if (Properties.Settings.Default.Intelligence >= itemList.find(inventory.SelectedItem.ToString()).intLevel)
@@ -550,6 +551,7 @@ namespace Eclipse
                 itemDescription.Text = "";
                 use.Enabled = false;
                 throwItem.Enabled = false;
+                moveItem.Enabled = false;
             }
         }
 
@@ -568,8 +570,32 @@ namespace Eclipse
                         mainConsole.AppendText(newSection() + "Achievement unlocked: " + achievement2.name + "!");
                     }
                 }
-                itemList.find(inventory.SelectedItem.ToString()).onUse();
-                inventory.Items.RemoveAt(inventory.SelectedIndex);
+                if (new Items().find(inventory.SelectedItem.ToString()).useMode.First() == 5)
+                {
+                    if (MessageBox.Show("Using an item that supports storage requires saving the game to prevent item duplication. Do you want to continue?", "Eclipse - Save Game?", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        string item = inventory.SelectedItem.ToString();
+                        inventory.Items.RemoveAt(inventory.SelectedIndex);
+                        if (saveGame())
+                        {
+                            itemList.find(item).onUse();
+                        }
+                        else
+                        {
+                            Properties.Settings.Default.itemInQueue = item;
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    itemList.find(inventory.SelectedItem.ToString()).onUse();
+                    inventory.Items.RemoveAt(inventory.SelectedIndex);
+                }
             }
             else
             {
@@ -1240,6 +1266,17 @@ namespace Eclipse
         private void achivements_Click(object sender, EventArgs e)
         {
             new AchievementList().Show();
+        }
+
+        private void moveItem_Click(object sender, EventArgs e)
+        {
+            new MoveItem(inventory.SelectedItem.ToString()).Show();
+            inventory.Items.Remove(inventory.SelectedItem);
+        }
+
+        private void storage_Click(object sender, EventArgs e)
+        {
+            new Storage().Show();
         }
     }
 }

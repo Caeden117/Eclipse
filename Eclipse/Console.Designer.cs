@@ -83,6 +83,7 @@
             this.guildHub = new System.Windows.Forms.Button();
             this.achievements = new System.Windows.Forms.Button();
             this.storage = new System.Windows.Forms.Button();
+            this.moveItem = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // name
@@ -340,7 +341,7 @@
             this.use.Enabled = false;
             this.use.Location = new System.Drawing.Point(759, 517);
             this.use.Name = "use";
-            this.use.Size = new System.Drawing.Size(96, 39);
+            this.use.Size = new System.Drawing.Size(83, 39);
             this.use.TabIndex = 25;
             this.use.Text = "Use";
             this.use.UseVisualStyleBackColor = true;
@@ -349,11 +350,11 @@
             // throwItem
             // 
             this.throwItem.Enabled = false;
-            this.throwItem.Location = new System.Drawing.Point(861, 517);
+            this.throwItem.Location = new System.Drawing.Point(896, 517);
             this.throwItem.Name = "throwItem";
-            this.throwItem.Size = new System.Drawing.Size(88, 39);
+            this.throwItem.Size = new System.Drawing.Size(53, 39);
             this.throwItem.TabIndex = 26;
-            this.throwItem.Text = "Throw Away";
+            this.throwItem.Text = "Discard";
             this.throwItem.UseVisualStyleBackColor = true;
             this.throwItem.Click += new System.EventHandler(this.throwItem_Click);
             // 
@@ -576,12 +577,25 @@
             this.storage.TabIndex = 46;
             this.storage.Text = "🏠 Storage";
             this.storage.UseVisualStyleBackColor = true;
+            this.storage.Click += new System.EventHandler(this.storage_Click);
+            // 
+            // moveItem
+            // 
+            this.moveItem.Enabled = false;
+            this.moveItem.Location = new System.Drawing.Point(848, 517);
+            this.moveItem.Name = "moveItem";
+            this.moveItem.Size = new System.Drawing.Size(42, 39);
+            this.moveItem.TabIndex = 47;
+            this.moveItem.Text = "Move";
+            this.moveItem.UseVisualStyleBackColor = true;
+            this.moveItem.Click += new System.EventHandler(this.moveItem_Click);
             // 
             // Console
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1180, 560);
+            this.Controls.Add(this.moveItem);
             this.Controls.Add(this.storage);
             this.Controls.Add(this.achievements);
             this.Controls.Add(this.guildHub);
@@ -693,5 +707,6 @@
         private System.Windows.Forms.Button guildHub;
         private System.Windows.Forms.Button achievements;
         private System.Windows.Forms.Button storage;
+        private System.Windows.Forms.Button moveItem;
     }
 }

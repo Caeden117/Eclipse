@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 
 #pragma warning disable IDE1006 // Naming Styles
@@ -101,6 +102,11 @@ namespace Eclipse
             new Item("Wheat", "Wheat grown in the wild. Can be used for bread.", false, 0.2f, new int[] { }, new int[] { }, 0),
             new Item("Bread", "A nice loaf. Recommended to use this for a sandwhich.", true, 0.25f, new int[] { 1 }, new int[] { 7 }, 2),
             new Item("Hamburger", "Ready to satisfy any one's hunger.", true, 1.25f, new int[] { 1 }, new int[] { 60 }, 2),
+            new Item("Basic Wooden Crate", "Basic way to stash away unneeded items.", true, 1.25f, new int[] { 5 }, new int[] { 30 }, 6, 0),
+            new Item("Wooden Crate", "Bigger, better, roomier.", true, 5f, new int[] { 5 }, new int[] { 60 }, 9, 1),
+            new Item("Reinforced Wooden Crate", "Adding some metal to a crate somehow gives it more room.", true, 12.5f, new int[] { 5 }, new int[] { 100 }, 12, 2),
+            new Item("Metal Chest", "Abundant space for lots of items you don't need.", true, 16f, new int[] { 5 }, new int[] { 150 }, 15, 3),
+            new Item("Box of Holding", "Something tells me this is a black hole.", true, 5f, new int[] { 5 }, new int[] { 300 }, 20, 4),
         };
 
         /// <summary>
@@ -141,6 +147,11 @@ namespace Eclipse
             new Craft(new string[] {"Wheat", "Wheat", "Wheat"}, "Bread", 2, 1),
             new Craft(new string[] {"Bread", "Lettuce", "Tomato"}, "Basic Sandwich", 3, 1),
             new Craft(new string[] {"Bread", "Lettuce", "Tomato", "Cooked Meat", "Carrot", "Lettuce", "Tomato"}, "Hamburger", 7, 1),
+            new Craft(new string[] {"Wood Plank", "Wood Plank", "Wood Plank", "Wood Plank", "Leather Strap", "Leather Strap"}, "Basic Wooden Crate", 6, 2),
+            new Craft(new string[] {"Basic Wooden Crate", "Log", "Log", "Simple Hammer"}, "Wooden Crate", 8, 2),
+            new Craft(new string[] {"Wooden Crate", "Bolt", "Bolt", "Bolt", "Bolt", "Metal Rod", "Metal Rod", "Metal Rod", "Metal Rod", "Simple Hammer" }, "Reinforced Wooden Crate", 12, 2),
+            new Craft(new string[] {"Metal Plate", "Metal Plate", "Metal Plate", "Metal Plate", "Metal Rod", "Metal Rod", "Metal Rod", "Metal Slab", "Simple Hammer" }, "Metal Chest", 15, 2),
+            new Craft(new string[] {"Gold Ingot", "Gold Ingot", "Gold Ingot", "Gold Ingot", "Gold Ingot", "Gold Ingot", "Gold Ingot", "Gold Ingot", "Metal Chest" }, "Box of Holding", 19, 3),
         };
 
         /// <summary>
@@ -247,7 +258,7 @@ namespace Eclipse
         /// The durability it has before it is removed
         /// </summary>
         public int durability;
-        public int[] useMode; //0 = heal, 1 = hunger, 2 = infect, 3 = Weapon
+        public int[] useMode; //0 = heal, 1 = hunger, 2 = infect, 3 = Weapon, 5 = Storage Size
         public int[] amount; //uses the same index as useMode. -1 == max hp/max hunger/0 infection || Weapons will use the next index for durability, first for damage.
         /// <summary>
         /// The minimum Intelligence score (Not modifier) for it to be able to be equiped and used.
@@ -359,6 +370,11 @@ namespace Eclipse
                 }else if (useMode[i] == 4)
                 {
                     Properties.Settings.Default.craftLevel++;
+                }else if (useMode[i] == 5)
+                {
+                    string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+                    Random bob = new Random();
+                    File.Create(Path.Combine(folder, name + "#" + bob.Next(0, int.MaxValue) + ".ecst"));
                 }
             }
         }

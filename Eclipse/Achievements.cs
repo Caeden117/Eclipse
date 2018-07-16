@@ -9,23 +9,38 @@ namespace Eclipse
     class Achievements
     {
         public static Achievement empty = new Achievement();
+        /// <summary>
+        /// The position of each character in this master encoder corresponds to an index in listOfAchievements
+        /// </summary>
         private static string masterEncoder = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+        /// <summary>
+        /// Takes a character and gives the achievement based off that character's position in the master encoder.
+        /// </summary>
         public static Achievement decodeAchievement(char x)
         {
             return listOfAchievements[masterEncoder.IndexOf(x)];
         }
 
+        /// <summary>
+        /// Returns the achievement with the given name
+        /// </summary>
         public static Achievement fromName(string x)
         {
             return listOfAchievements.Where(g => g.name == x).First();
         }
 
+        /// <summary>
+        /// Returns true if the achievement has been successfully given.
+        /// </summary>
         public static bool giveAchievement(string name, bool isItem, Achievement.AchievementType type)
         {
             return giveAchievement(name, isItem, type, out Achievement achievement);
         }
 
+        /// <summary>
+        /// Returns true if the achievement has been successfully given. Includes an Achievement output.
+        /// </summary>
         public static bool giveAchievement(string name, bool isItem, Achievement.AchievementType type, out Achievement achievement)
         {
             List<char> encoder = new List<char>();
@@ -113,6 +128,11 @@ namespace Eclipse
             new Achievement("Initiate", "Kill 125 enemies.", Achievement.AchievementType.Other),
             new Achievement("Master", "Kill 500 enemies.", Achievement.AchievementType.Other),
             new Achievement("Legend", "Kill 1000 enemies.", Achievement.AchievementType.Other),
+            new Achievement("Stash Everything", "Craft and Use a Basic Wooden Crate.", Achievement.AchievementType.Use, "Basic Wooden Crate"),
+            new Achievement("The More The Merrier", "Upgrade your Crate.", Achievement.AchievementType.Use, "Wooden Crate"),
+            new Achievement("Metal Makes Everything Better", "Reinforce a Crate with that sweet, sweet Metal.", Achievement.AchievementType.Use, "Reinforced Wooden Crate"),
+            new Achievement("Dungeon Loot", "Make a Chest out of 100% Metal.", Achievement.AchievementType.Use, "Metal Chest"),
+            new Achievement("Size Doesn't Matter", "Create a box that shouldn't exist.", Achievement.AchievementType.Use, "Box of Holding"),
         };
     }
 

@@ -32,7 +32,8 @@ namespace Eclipse
             string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
             foreach (string file in Directory.EnumerateFiles(folder))
             {
-                memberList.Items.Add(file.Split('\\').Last().Split('.').First());
+                if (file.Split('\\').Last().Split('.').Last() == "ecm") //If the file extension is .ecm
+                    memberList.Items.Add(file.Split('\\').Last().Split('.').First());
             }
         }
 
