@@ -14,6 +14,7 @@ namespace Eclipse
     public partial class MoveItem : Form
     {
         string itemToMove;
+        bool closedThroughButton = false;
 
         public MoveItem(string itemName)
         {
@@ -73,18 +74,20 @@ namespace Eclipse
             {
                 Properties.Settings.Default.itemInQueue = itemToMove;
             }
+            closedThroughButton = true;
             Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.itemInQueue = itemToMove;
+            closedThroughButton = true;
             Close();
         }
 
         private void MoveItem_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing)
+            if (!closedThroughButton)
             {
                 e.Cancel = true;
                 MessageBox.Show("To prevent item loss, please exit this form by using the \"Cancel\" button. This will send the item to your Inventory.", "Eclipse - Cancel", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
