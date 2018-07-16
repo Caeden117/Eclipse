@@ -84,8 +84,11 @@ namespace Eclipse
 
         private void MoveItem_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            MessageBox.Show("To prevent item loss, please exit this form by using the \"Cancel\" button. This will send the item to your Inventory.", "Eclipse - Cancel", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                MessageBox.Show("To prevent item loss, please exit this form by using the \"Cancel\" button. This will send the item to your Inventory.", "Eclipse - Cancel", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
     }
 }
