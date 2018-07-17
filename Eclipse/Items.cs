@@ -107,6 +107,12 @@ namespace Eclipse
             new Item("Reinforced Wooden Crate", "Adding some metal to a crate somehow gives it more room.", true, 12.5f, new int[] { 5 }, new int[] { 100 }, 12, 2),
             new Item("Metal Chest", "Abundant space for lots of items you don't need.", true, 16f, new int[] { 5 }, new int[] { 150 }, 15, 3),
             new Item("Box of Holding", "Something tells me this is a black hole.", true, 5f, new int[] { 5 }, new int[] { 300 }, 20, 4),
+            new Item("Fries", "Good on its own, but better as a side dish.", true, 0.5f, new int[] { 1 }, new int[] { 20 }, 0),
+            new Item("Blueberry", "Listen here, you're being berry rude.", true, 0.1f, new int[] { 1 }, new int[] { 2 }, 0),
+            new Item("Strawberry", "You could make a shake with this.", true, 0.1f, new int[] { 1 }, new int[] { 2 }, 0),
+            new Item("Raspberry", "With our powers combined...", true, 0.1f, new int[] { 1 }, new int[] { 2 }, 0),
+            new Item("Berry Milkshake", "Here's your chance to take a day off.", true, 0.75f, new int[] { 1 }, new int[] { 15 }, 0, 1),
+            new Item("Milk Carton", "Hope it isn't spoiled.", true, 0.4f, new int[] { 1 }, new int[] { 7 }, 0),
         };
 
         /// <summary>
@@ -152,6 +158,9 @@ namespace Eclipse
             new Craft(new string[] {"Wooden Crate", "Bolt", "Bolt", "Bolt", "Bolt", "Metal Rod", "Metal Rod", "Metal Rod", "Metal Rod", "Simple Hammer" }, "Reinforced Wooden Crate", 12, 2),
             new Craft(new string[] {"Metal Plate", "Metal Plate", "Metal Plate", "Metal Plate", "Metal Rod", "Metal Rod", "Metal Rod", "Metal Slab", "Simple Hammer" }, "Metal Chest", 15, 2),
             new Craft(new string[] {"Gold Ingot", "Gold Ingot", "Gold Ingot", "Gold Ingot", "Gold Ingot", "Gold Ingot", "Gold Ingot", "Gold Ingot", "Metal Chest" }, "Box of Holding", 19, 3),
+            new Craft(new string[] {"Cooked Potato", "Cooked Potato" }, "Fries", 6, 1),
+            new Craft(new string[] {"Milk Carton", "Milk Carton", "Blueberry", "Raspberry", "Strawberry"}, "Berry Milkshake", 5, 1),
+            new Craft(new string[] {"Fries", "Fries", "Berry Milkshake", "Hamburger"}, "Hearty Dinner", 17, 1),
         };
 
         /// <summary>

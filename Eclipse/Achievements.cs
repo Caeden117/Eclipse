@@ -133,6 +133,8 @@ namespace Eclipse
             new Achievement("Metal Makes Everything Better", "Reinforce a Crate with that sweet, sweet Metal.", Achievement.AchievementType.Use, "Reinforced Wooden Crate"),
             new Achievement("Dungeon Loot", "Make a Chest out of 100% Metal.", Achievement.AchievementType.Use, "Metal Chest"),
             new Achievement("Size Doesn't Matter", "Create a box that shouldn't exist.", Achievement.AchievementType.Use, "Box of Holding"),
+            new Achievement("Your Day Off", "Take a sip of your Berry Milkshake.", Achievement.AchievementType.Use, "Berry Milkshake"),
+            new Achievement("Feasting Time", "Make a Hearty Dinner and admire your efforts.", Achievement.AchievementType.Craft, "Hearty Dinner"),
         };
     }
 

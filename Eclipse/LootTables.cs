@@ -14,7 +14,9 @@
             "Tomato",
             "Potato",
             "Lettuce",
-            "Wheat"
+            "Wheat",
+            "Rotten Meat",
+            "Rotten Meat"
         };
 
         public string[,] lootingTables = new string[,] //Stuff from looting
@@ -22,9 +24,16 @@
             {
                 "Carrot",
                 "Tomato",
-                "Wood Plank",
+                "Blueberry",
                 "Lettuce",
                 "Wheat"
+            },
+            {
+                "Blueberry",
+                "Milk Carton",
+                "Strawberry",
+                "Milk Carton",
+                "Raspberry"
             },
             {
                 "Leather Strap",

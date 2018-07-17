@@ -54,5 +54,10 @@ namespace Eclipse
             }
             textBox1.Clear();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new EclipseGuide().Show();
+        }
     }
 }

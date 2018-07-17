@@ -283,12 +283,12 @@ namespace Eclipse
                     if (!craft.Items.Contains(recipe.result))
                     {
                         craft.Items.Add(recipe.result);
-                        if ((recipe.result == "Workbench" && Properties.Settings.Default.craftLevel > 0) || (recipe.result == "Forge" && Properties.Settings.Default.craftLevel > 1) || (recipe.result == "Fire" && Properties.Settings.Default.craftLevel > 1) || (inventory.Items.Contains(recipe.result) && itemList.find(recipe.result).durability > 0))
+                        if ((recipe.result == "Workbench" && Properties.Settings.Default.craftLevel > 1) || (recipe.result == "Forge" && Properties.Settings.Default.craftLevel > 1) || (recipe.result == "Fire" && Properties.Settings.Default.craftLevel > 0) || (inventory.Items.Contains(recipe.result) && itemList.find(recipe.result).durability > 0))
                         {
                             craft.Items.Remove(recipe.result);
                         }
                     }
-                    else if ((recipe.result == "Workbench" && Properties.Settings.Default.craftLevel > 0) || (recipe.result == "Forge" && Properties.Settings.Default.craftLevel > 1) || (recipe.result == "Fire" && Properties.Settings.Default.craftLevel > 1) || (inventory.Items.Contains(recipe.result) && itemList.find(recipe.result).durability > 0))
+                    else if ((recipe.result == "Workbench" && Properties.Settings.Default.craftLevel > 1) || (recipe.result == "Forge" && Properties.Settings.Default.craftLevel > 1) || (recipe.result == "Fire" && Properties.Settings.Default.craftLevel > 0) || (inventory.Items.Contains(recipe.result) && itemList.find(recipe.result).durability > 0))
                     {
                         craft.Items.Remove(recipe.result);
                     }
@@ -303,7 +303,7 @@ namespace Eclipse
                 recipeCount = 0;
             }
 
-            if (Properties.Settings.Default.Level >= 5)
+            if (Properties.Settings.Default.Level >= 5 && scavangeLoop.Enabled == false)
             {
                 scavange.Enabled = true;
             }
