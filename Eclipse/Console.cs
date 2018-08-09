@@ -1041,6 +1041,12 @@ namespace Eclipse
                             mainConsole.AppendText(System.Environment.NewLine + "Saved item: " + inventoryItem);
                     }
                 }
+                string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), string.Format("EclipseGame\\{0}#{1}\\info.ecinfo", Properties.Settings.Default.Name, Properties.Settings.Default.identifier));
+                using (StreamWriter save = new StreamWriter(folder)) //Saving information on save file location and date/time of saving.
+                {
+                    save.WriteLine(DateTime.Now);
+                    save.WriteLine(saveFile.FileName);
+                }
                 mainConsole.AppendText(System.Environment.NewLine + "Game saved!" + newSection());
                 return true;
             }

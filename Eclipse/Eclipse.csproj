@@ -104,6 +104,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GameManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameManager.Designer.cs">
+      <DependentUpon>GameManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GuildInfo.cs">
       <SubType>Form</SubType>
@@ -156,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GameManager.resx">
+      <DependentUpon>GameManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GuildInfo.resx">
       <DependentUpon>GuildInfo.cs</DependentUpon>

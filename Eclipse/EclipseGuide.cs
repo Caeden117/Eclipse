@@ -22,7 +22,7 @@ namespace Eclipse
 
         private void EclipseGuide_Load(object sender, EventArgs e)
         {
-            goToItem.Enabled = false;
+            goToComponent.Enabled = false;
             point = itemProperties.Location;
             foreach(Item item in new Items().items)
             {
@@ -195,19 +195,24 @@ namespace Eclipse
         {
             if (craftComponents.SelectedIndex > -1)
             {
-                goToItem.Enabled = true;
+                goToComponent.Enabled = true;
             }
         }
 
         private void goToItem_Click(object sender, EventArgs e)
         {
-            itemReference = craftComponents.SelectedItem.ToString();
+            itemReference = listBox1.SelectedItem.ToString();
             toggleListBox();
         }
 
         private void goToCrafting_Click(object sender, EventArgs e)
         {
-            itemReference = listBox1.SelectedItem.ToString();
+            goToItem_Click(sender, e);
+        }
+
+        private void goToComponent_Click(object sender, EventArgs e)
+        {
+            itemReference = craftComponents.SelectedItem.ToString();
             toggleListBox();
         }
     }

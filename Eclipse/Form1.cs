@@ -85,5 +85,13 @@ namespace Eclipse
         {
             System.Diagnostics.Process.Start("https://caed.jackz.me");
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("You are about to open the Eclipse Game Manager. This will allow you to see every Eclipse game that has started, and allows you to easily remove them. Do you want to continue?", "Eclipse - Open Game Manager?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                new GameManager().Show();
+            }
+        }
     }
 }

@@ -38,6 +38,7 @@
             this.itemName = new System.Windows.Forms.Label();
             this.craftingProperties = new System.Windows.Forms.GroupBox();
             this.goToItem = new System.Windows.Forms.Button();
+            this.goToComponent = new System.Windows.Forms.Button();
             this.craftComponents = new System.Windows.Forms.ListBox();
             this.craftIntelligence = new System.Windows.Forms.Label();
             this.craftDetails = new System.Windows.Forms.Label();
@@ -133,6 +134,7 @@
             // craftingProperties
             // 
             this.craftingProperties.Controls.Add(this.goToItem);
+            this.craftingProperties.Controls.Add(this.goToComponent);
             this.craftingProperties.Controls.Add(this.craftComponents);
             this.craftingProperties.Controls.Add(this.craftIntelligence);
             this.craftingProperties.Controls.Add(this.craftDetails);
@@ -146,13 +148,24 @@
             // 
             // goToItem
             // 
-            this.goToItem.Location = new System.Drawing.Point(11, 149);
+            this.goToItem.Location = new System.Drawing.Point(183, 149);
             this.goToItem.Name = "goToItem";
-            this.goToItem.Size = new System.Drawing.Size(95, 23);
+            this.goToItem.Size = new System.Drawing.Size(87, 23);
             this.goToItem.TabIndex = 33;
-            this.goToItem.Text = "Component Info";
+            this.goToItem.Text = "Go To Item";
             this.goToItem.UseVisualStyleBackColor = true;
+            this.goToItem.Visible = false;
             this.goToItem.Click += new System.EventHandler(this.goToItem_Click);
+            // 
+            // goToComponent
+            // 
+            this.goToComponent.Location = new System.Drawing.Point(11, 149);
+            this.goToComponent.Name = "goToComponent";
+            this.goToComponent.Size = new System.Drawing.Size(95, 23);
+            this.goToComponent.TabIndex = 33;
+            this.goToComponent.Text = "Component Info";
+            this.goToComponent.UseVisualStyleBackColor = true;
+            this.goToComponent.Click += new System.EventHandler(this.goToComponent_Click);
             // 
             // craftComponents
             // 
@@ -239,8 +252,9 @@
         private System.Windows.Forms.Label craftDetails;
         private System.Windows.Forms.Label craftResult;
         private System.Windows.Forms.ListBox craftComponents;
-        private System.Windows.Forms.Button goToItem;
+        private System.Windows.Forms.Button goToComponent;
         private System.Windows.Forms.Button goToCrafting;
         private System.Windows.Forms.Label sizes;
+        private System.Windows.Forms.Button goToItem;
     }
 }

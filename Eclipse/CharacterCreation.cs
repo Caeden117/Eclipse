@@ -10,7 +10,7 @@ namespace Eclipse
         bool createdGame = false;
         string[] tips = new string[] {
             "Stats are randomly chosen on game creation - Base your character off of these!",
-            "You can choose one stat to upgrade every level.",
+            "You can choose one stat to upgrade every level. The higher stats you have, the more successful you'll be.",
             "Once in a while, you'll stumble upon a survivor. With a high enough Charisma, maybe you could recruit them!",
             "If you're feeling Lucky, you could find more valuable loot in drops!",
             "Each stat you have can influence different aspects of Eclipse!",
@@ -22,6 +22,8 @@ namespace Eclipse
             "A high Endurance can lessen the effects of Infection and Hunger!",
             new Items().items.Length + " Items strong!",
             "You can craft up to " + new Items().recipes.Length + " Items!",
+            "Running out of space in your inventory? Craft some storage and stash unwanted stuff there!",
+            "Need to look up a crafting recipe? Visit the Eclipse Guide in Settings!",
         };
 
         public CharacterCreation()
